@@ -87,7 +87,7 @@ const StudentEdit = () => {
     <View className="student-edit-page">
       <View className="header">
         <View className="back-btn" onClick={handleCancel}>
-          <Text className="material-symbols-outlined">arrow_back</Text>
+          <Text style={{ fontSize: '40rpx', fontWeight: 'bold' }}>‹</Text>
         </View>
         <Text className="title">{isEdit ? 'Edit Student' : 'New Student'}</Text>
         <View className="placeholder" />
@@ -114,7 +114,7 @@ const StudentEdit = () => {
                 {formData.name.charAt(formData.name.length - 1).toUpperCase()}
               </View>
             ) : (
-              <Text className="material-symbols-outlined icon-add">add_a_photo</Text>
+              <Text style={{ fontSize: '60rpx' }}>📷</Text>
             )}
           </View>
           <View className="upload-hint">
@@ -161,9 +161,7 @@ const StudentEdit = () => {
             >
               <View className="input-box picker-box">
                 <Text>{formData.gender}</Text>
-                <Text className="material-symbols-outlined" style={{ fontSize: '32rpx' }}>
-                  expand_more
-                </Text>
+                <Text style={{ fontSize: '30rpx', color: '#ccc' }}>▾</Text>
               </View>
             </Picker>
           </View>
@@ -177,9 +175,7 @@ const StudentEdit = () => {
             >
               <View className="input-box picker-box">
                 <Text>{formData.birthday || 'Select'}</Text>
-                <Text className="material-symbols-outlined" style={{ fontSize: '32rpx' }}>
-                  calendar_today
-                </Text>
+                <Text style={{ fontSize: '30rpx' }}>📅</Text>
               </View>
             </Picker>
           </View>

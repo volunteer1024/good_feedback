@@ -4,10 +4,10 @@ import './index.less';
 
 const TabBar = ({ activeTab = 'home' }) => {
   const tabs = [
-    { id: 'home', icon: 'home', label: 'Home', path: '/pages/index/index' },
-    { id: 'students', icon: 'group', label: 'Students', path: '/pages/students/index' },
-    { id: 'feedback', icon: 'chat', label: 'Feedback', path: '/pages/index/index' },
-    { id: 'settings', icon: 'settings', label: 'Settings', path: '/pages/index/index' },
+    { id: 'home', icon: '🏠', label: 'Home', path: '/pages/index/index' },
+    { id: 'students', icon: '👥', label: 'Students', path: '/pages/students/index' },
+    { id: 'feedback', icon: '💬', label: 'Feedback', path: '/pages/index/index' },
+    { id: 'settings', icon: '⚙️', label: 'Settings', path: '/pages/index/index' },
   ];
 
   const handleTabClick = (tab) => {
@@ -23,10 +23,7 @@ const TabBar = ({ activeTab = 'home' }) => {
           className={`nav-item ${activeTab === tab.id ? 'active' : ''}`}
           onClick={() => handleTabClick(tab)}
         >
-          <Text
-            className={`material-symbols-outlined ${activeTab === tab.id ? 'filled' : ''}`}
-            style={{ fontSize: '48rpx' }}
-          >
+          <Text className="nav-icon" style={{ fontSize: '40rpx' }}>
             {tab.icon}
           </Text>
           <Text className="nav-label">{tab.label}</Text>

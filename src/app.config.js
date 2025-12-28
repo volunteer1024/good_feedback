@@ -1,10 +1,5 @@
 export default {
-  pages: [
-    'pages/index/index',
-    'pages/attendance/index',
-    'pages/students/index',
-    'pages/students/edit',
-  ],
+  pages: ['pages/index/index', 'pages/attendance/index', 'pages/students/index'],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#FBFBF9',
