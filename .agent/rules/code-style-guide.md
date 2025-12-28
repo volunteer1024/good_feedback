@@ -2,6 +2,11 @@
 trigger: always_on
 ---
 
+## 强制要求
+
+- 新增页面必须使用 less modules，或者 tailwind。注意页面响应式，在微信小程序上的兼容性
+- 新增页面或组件，强制使用 typescript
+
 ## 🛠️ 技术栈 (Tech Stack)
 
 | 维度         | 技术选型                    | 说明                                           |
