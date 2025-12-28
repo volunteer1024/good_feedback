@@ -1,241 +1,247 @@
-@import "../../styles/variables.less";
+@import '../../styles/variables.less';
 
 .attendance-page {
-    min-height: 100vh;
-    background-color: @background-light;
-    color: @text-main;
+  width: 100%;
+  min-height: 100vh;
+  background-color: @background-light;
+  color: @text-main;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  .header {
+    background-color: fade(@background-light, 90%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid @border-light;
+    padding: 32rpx 40rpx 40rpx;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      .title-group {
+        .title {
+          font-size: 60rpx;
+          font-weight: 700;
+          line-height: 1.2;
+          color: @text-main;
+        }
+
+        .subtitle {
+          font-size: 28rpx;
+          color: @text-muted;
+          margin-top: 12rpx;
+          display: flex;
+          align-items: center;
+          gap: 12rpx;
+        }
+      }
+
+      .select-all-btn {
+        font-size: 24rpx;
+        font-weight: 600;
+        padding: 12rpx 24rpx;
+        border: 1px solid @border-light;
+        border-radius: 8rpx;
+        background: transparent;
+        color: @text-main;
+      }
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 40rpx;
+    padding-bottom: 240rpx;
+
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24rpx;
+      margin-bottom: 32rpx;
+    }
+
+    .add-student-btn {
+      width: 100%;
+      height: 100rpx;
+      border: 1px dashed #ccc;
+      border-radius: 20rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16rpx;
+      color: @text-muted;
+      font-size: 28rpx;
+      background: transparent;
+
+      &:active {
+        background-color: @accent-bg;
+      }
+    }
+  }
+
+  .student-card {
+    position: relative;
+    background: @surface;
+    border: 1px solid @border-light;
+    border-radius: 24rpx;
+    padding: 32rpx;
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
+    align-items: center;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-    .header {
-        background-color: fade(@background-light, 90%);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid @border-light;
-        padding: 32rpx 40rpx 40rpx;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-
-            .title-group {
-                .title {
-                    font-size: 60rpx;
-                    font-weight: 700;
-                    line-height: 1.2;
-                    color: @text-main;
-                }
-
-                .subtitle {
-                    font-size: 28rpx;
-                    color: @text-muted;
-                    margin-top: 12rpx;
-                    display: flex;
-                    align-items: center;
-                    gap: 12rpx;
-                }
-            }
-
-            .select-all-btn {
-                font-size: 24rpx;
-                font-weight: 600;
-                padding: 12rpx 24rpx;
-                border: 1px solid @border-light;
-                border-radius: 8rpx;
-                background: transparent;
-                color: @text-main;
-            }
-        }
+    &.active {
+      border-color: @primary;
+      box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
     }
 
-    .main-content {
-        flex: 1;
-        padding: 40rpx;
-        padding-bottom: 240rpx;
+    .check-icon {
+      position: absolute;
+      top: 24rpx;
+      right: 24rpx;
+      width: 40rpx;
+      height: 40rpx;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
 
-        .student-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24rpx;
-            margin-bottom: 32rpx;
-        }
-
-        .add-student-btn {
-            width: 100%;
-            height: 100rpx;
-            border: 1px dashed #CCC;
-            border-radius: 20rpx;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16rpx;
-            color: @text-muted;
-            font-size: 28rpx;
-            background: transparent;
-
-            &:active {
-                background-color: @accent-bg;
-            }
-        }
+      &.checked {
+        background-color: @primary;
+        border-color: @primary;
+        color: #fff;
+      }
     }
 
-    .student-card {
-        position: relative;
-        background: @surface;
-        border: 1px solid @border-light;
-        border-radius: 24rpx;
-        padding: 32rpx;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: all 0.2s;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    .avatar-wrapper {
+      position: relative;
+      margin-bottom: 16rpx;
 
-        &.active {
-            border-color: @primary;
-            box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+      .avatar {
+        width: 112rpx;
+        height: 112rpx;
+        border-radius: 50%;
+        background-color: #f3f4f6;
+        border: 4rpx solid transparent;
+
+        &.ring-active {
+          border-color: @primary;
+          padding: 4rpx;
+          background-clip: content-box;
         }
 
-        .check-icon {
-            position: absolute;
-            top: 24rpx;
-            right: 24rpx;
-            width: 40rpx;
-            height: 40rpx;
-            border-radius: 50%;
-            border: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-
-            &.checked {
-                background-color: @primary;
-                border-color: @primary;
-                color: #fff;
-            }
+        &.ring-warning {
+          border-color: @warning;
+          padding: 4rpx;
+          background-clip: content-box;
         }
+      }
 
-        .avatar-wrapper {
-            position: relative;
-            margin-bottom: 16rpx;
-
-            .avatar {
-                width: 112rpx;
-                height: 112rpx;
-                border-radius: 50%;
-                background-color: #f3f4f6;
-                border: 4rpx solid transparent;
-
-                &.ring-active {
-                    border-color: @primary;
-                    padding: 4rpx;
-                    background-clip: content-box;
-                }
-
-                &.ring-warning {
-                    border-color: @warning;
-                    padding: 4rpx;
-                    background-clip: content-box;
-                }
-            }
-
-            .badge {
-                position: absolute;
-                bottom: -12rpx;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: @warning;
-                color: #fff;
-                font-size: 20rpx;
-                font-weight: 700;
-                padding: 4rpx 12rpx;
-                border-radius: 8rpx;
-                white-space: nowrap;
-                box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
-            }
-        }
-
-        .info {
-            text-align: center;
-            margin-top: 8rpx;
-
-            .name {
-                font-size: 28rpx;
-                font-weight: 600;
-                color: @text-main;
-                display: block;
-            }
-
-            .status {
-                font-size: 24rpx;
-                color: @text-muted;
-                margin-top: 4rpx;
-
-                &.warning {
-                    color: @warning;
-                    font-weight: 600;
-                }
-            }
-        }
+      .badge {
+        position: absolute;
+        bottom: -12rpx;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: @warning;
+        color: #fff;
+        font-size: 20rpx;
+        font-weight: 700;
+        padding: 4rpx 12rpx;
+        border-radius: 8rpx;
+        white-space: nowrap;
+        box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+      }
     }
 
-    .bottom-action {
-        position: fixed;
-        bottom: 160rpx;
-        left: 0;
-        right: 0;
-        padding: 32rpx 40rpx 64rpx;
-        background: linear-gradient(to top, @background-light, fade(@background-light, 90%) 80%, transparent);
-        z-index: 10;
-        pointer-events: none;
+    .info {
+      text-align: center;
+      margin-top: 8rpx;
 
-        .register-btn {
-            pointer-events: auto;
-            width: 100%;
-            height: 96rpx;
-            background-color: @primary;
-            color: #fff;
-            border-radius: 20rpx;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16rpx;
-            box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.12);
-            transition: all 0.2s;
+      .name {
+        font-size: 28rpx;
+        font-weight: 600;
+        color: @text-main;
+        display: block;
+      }
 
-            &:active {
-                transform: scale(0.98);
-                background-color: #000;
-            }
+      .status {
+        font-size: 24rpx;
+        color: @text-muted;
+        margin-top: 4rpx;
 
-            .btn-text {
-                font-size: 30rpx;
-                font-weight: 600;
-                letter-spacing: 2rpx;
-            }
-
-            .count-badge {
-                background-color: rgba(255, 255, 255, 0.2);
-                padding: 4rpx 12rpx;
-                border-radius: 8rpx;
-                font-size: 20rpx;
-                font-weight: 700;
-            }
+        &.warning {
+          color: @warning;
+          font-weight: 600;
         }
+      }
     }
+  }
+
+  .bottom-action {
+    position: fixed;
+    bottom: 160rpx;
+    left: 0;
+    right: 0;
+    padding: 32rpx 40rpx 64rpx;
+    background: linear-gradient(
+      to top,
+      @background-light,
+      fade(@background-light, 90%) 80%,
+      transparent
+    );
+    z-index: 10;
+    pointer-events: none;
+
+    .register-btn {
+      pointer-events: auto;
+      width: 100%;
+      height: 96rpx;
+      background-color: @primary;
+      color: #fff;
+      border-radius: 20rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16rpx;
+      box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.12);
+      transition: all 0.2s;
+
+      &:active {
+        transform: scale(0.98);
+        background-color: #000;
+      }
+
+      .btn-text {
+        font-size: 30rpx;
+        font-weight: 600;
+        letter-spacing: 2rpx;
+      }
+
+      .count-badge {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 4rpx 12rpx;
+        border-radius: 8rpx;
+        font-size: 20rpx;
+        font-weight: 700;
+      }
+    }
+  }
 }
 
 // Icons
 .icon {
-    width: 48rpx;
-    height: 48rpx;
-    display: inline-block;
-    vertical-align: middle;
+  width: 48rpx;
+  height: 48rpx;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .check-mark {

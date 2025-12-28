@@ -197,7 +197,6 @@ const Students = () => {
                       <Text className={`status-badge ${getStatusClass(student.status)}`}>
                         {student.status}
                       </Text>
-                      <Text className="student-id">ID: #{student.id}</Text>
                     </View>
                   </View>
                 </View>

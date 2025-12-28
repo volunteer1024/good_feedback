@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Student Profile</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Lexend:wght@300;400;500;600;700&amp;family=Merriweather:wght@300;400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ivory: '#FBFBF9',
+              surface: '#FFFFFF',
+              ink: '#37352F',
+              'ink-light': 'rgba(55, 53, 47, 0.65)',
+              'ink-lighter': 'rgba(55, 53, 47, 0.45)',
+              'border-subtle': 'rgba(55, 53, 47, 0.09)',
+              'highlight-orange': '#FBE4D8',
+              'text-orange': '#D9730D',
+              'border-orange': 'rgba(235, 87, 87, 0.3)',
+              'tag-bg': 'rgba(55, 53, 47, 0.08)',
+              'accent-blue': '#2383E2',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Lexend', 'sans-serif'],
+              serif: ['Merriweather', 'serif'],
+            },
+            boxShadow: {
+              subtle: '0px 1px 2px rgba(0, 0, 0, 0.05)',
+              card: '0px 1px 3px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.02)',
+              floating: '0px 4px 20px rgba(0, 0, 0, 0.15)',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #fbfbf9;
+        color: #37352f;
+      }
+      ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased overflow-x-hidden">
+    <div
+      class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-ivory shadow-xl border-x border-border-subtle"
+    >
+      <header
+        class="sticky top-0 z-50 flex items-center bg-ivory/90 backdrop-blur-md px-4 py-3 justify-between border-b border-border-subtle transition-all"
+      >
+        <button
+          class="flex items-center justify-center text-ink hover:bg-black/5 rounded-md p-1 transition-colors size-9"
+        >
+          <span class="material-symbols-outlined text-[22px]">arrow_back</span>
+        </button>
+        <h2
+          class="text-ink font-medium text-[15px] tracking-wide opacity-0 animate-[fadeIn_0.3s_ease-in_forwards]"
+        >
+          Student Profile
+        </h2>
+        <button
+          class="flex items-center justify-center text-ink hover:bg-black/5 rounded-md p-1 transition-colors size-9"
+        >
+          <span class="material-symbols-outlined text-[20px]">more_horiz</span>
+        </button>
+      </header>
+      <main class="flex-1 flex flex-col px-5 pt-4 pb-32 gap-8">
+        <section class="flex flex-col items-center gap-4 mt-2">
+          <div class="relative group cursor-pointer">
+            <div
+              class="relative w-28 h-28 rounded-full overflow-hidden border border-border-subtle shadow-subtle"
+            >
+              <img
+                alt="Portrait of student Alex Johnson"
+                class="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLOaFMUhVDkddRZmawvaqEY5dua48OBa-754k6rJaT4krl2ZV_N-Y1BhY-JGSVLoFp9MqZZ1zSNqqgs5bHmbENrvsGcNqT_L9TbQcMP4-teXGSzaxIL-StP_-NxKAYCNedEpD3thUORwUeMFmfI3Vb4BifbMLI9SRD7jX1wBdtkATGuRz7Jktc4532nTqqCkgA-t9dV57Vyys4nujy6zsuYOIaulKkmvYrD8o9tl6Rc3lr530HFvlXkllosX3ac5Cy8gXyKKH5qQ"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 right-0 bg-surface border border-border-subtle shadow-sm rounded-full p-1.5 flex items-center justify-center text-ink-light hover:text-ink transition-colors"
+            >
+              <span class="material-symbols-outlined text-[16px]">photo_camera</span>
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center text-center gap-2">
+            <h1 class="text-3xl font-serif font-bold text-ink tracking-tight">Alex Johnson</h1>
+            <div
+              class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-tag-bg border border-transparent"
+            >
+              <span class="text-[11px] font-semibold text-ink-light uppercase tracking-wider"
+                >Nickname</span
+              >
+              <span class="text-sm font-medium text-ink">AJ</span>
+            </div>
+          </div>
+        </section>
+        <section class="grid grid-cols-2 gap-3">
+          <div
+            class="relative overflow-hidden rounded-lg bg-highlight-orange border border-border-orange p-4 flex flex-col justify-between h-32 group transition-all hover:shadow-subtle"
+          >
+            <div class="flex justify-between items-start">
+              <p class="text-text-orange text-xs font-semibold uppercase tracking-wider opacity-80">
+                Remaining
+              </p>
+              <span class="material-symbols-outlined text-text-orange opacity-50 text-[20px]"
+                >hourglass_bottom</span
+              >
+            </div>
+            <div class="z-10">
+              <div class="flex items-baseline gap-1">
+                <p class="text-text-orange text-4xl font-bold font-display tracking-tight">2.5</p>
+                <span class="text-text-orange text-sm font-medium opacity-80">hrs</span>
+              </div>
+              <div
+                class="mt-1 inline-flex items-center px-1.5 py-0.5 rounded bg-white/40 border border-text-orange/20"
+              >
+                <span class="text-[10px] font-bold text-text-orange uppercase tracking-wide"
+                  >Low Balance</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden rounded-lg bg-surface border border-border-subtle p-4 flex flex-col justify-between h-32 group shadow-card hover:shadow-lg transition-all"
+          >
+            <div class="flex justify-between items-start">
+              <p class="text-ink-light text-xs font-semibold uppercase tracking-wider">Fee Rate</p>
+              <span class="material-symbols-outlined text-ink-light opacity-50 text-[20px]"
+                >payments</span
+              >
+            </div>
+            <div class="z-10">
+              <div class="flex items-baseline gap-1">
+                <p class="text-ink text-4xl font-bold font-display tracking-tight">$50</p>
+              </div>
+              <p class="text-ink-light text-xs mt-1">per hour</p>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h3 class="text-xs font-semibold text-ink-light uppercase tracking-wider mb-2 px-1">
+            Information
+          </h3>
+          <div
+            class="rounded-lg bg-surface border border-border-subtle shadow-card overflow-hidden divide-y divide-border-subtle"
+          >
+            <div
+              class="grid grid-cols-[100px_1fr] px-4 py-3.5 hover:bg-ivory/50 transition-colors items-center group"
+            >
+              <div class="flex items-center gap-2">
+                <span
+                  class="material-symbols-outlined text-ink-light text-[18px] group-hover:text-ink transition-colors"
+                  >person</span
+                >
+                <p class="text-ink-light text-sm">Gender</p>
+              </div>
+              <p class="text-ink text-sm font-medium text-right">Female</p>
+            </div>
+            <div
+              class="grid grid-cols-[100px_1fr] px-4 py-3.5 hover:bg-ivory/50 transition-colors items-center group"
+            >
+              <div class="flex items-center gap-2">
+                <span
+                  class="material-symbols-outlined text-ink-light text-[18px] group-hover:text-ink transition-colors"
+                  >cake</span
+                >
+                <p class="text-ink-light text-sm">Birthday</p>
+              </div>
+              <p class="text-ink text-sm font-medium text-right">
+                Oct 24, 2012 <span class="text-ink-lighter font-normal ml-1">(12 yrs)</span>
+              </p>
+            </div>
+            <div
+              class="grid grid-cols-[100px_1fr] px-4 py-3.5 hover:bg-ivory/50 transition-colors items-center group"
+            >
+              <div class="flex items-center gap-2">
+                <span
+                  class="material-symbols-outlined text-ink-light text-[18px] group-hover:text-ink transition-colors"
+                  >school</span
+                >
+                <p class="text-ink-light text-sm">Level</p>
+              </div>
+              <p class="text-ink text-sm font-medium text-right">Intermediate Piano</p>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="flex justify-between items-end mb-2 px-1">
+            <h3 class="text-xs font-semibold text-ink-light uppercase tracking-wider">Remarks</h3>
+          </div>
+          <div
+            class="bg-surface rounded-lg p-4 border border-border-subtle shadow-card flex gap-3 relative group"
+          >
+            <div class="shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-ink text-[20px]">sticky_note_2</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-ink text-sm leading-relaxed">
+                Needs extra help with scales on the left hand. Parents prefer text updates over
+                email. Remember to assign new Czerny exercises next week.
+              </p>
+            </div>
+            <button
+              class="absolute top-2 right-2 p-1.5 rounded hover:bg-tag-bg text-ink-lighter hover:text-ink transition-colors"
+            >
+              <span class="material-symbols-outlined text-[16px]">edit</span>
+            </button>
+          </div>
+        </section>
+      </main>
+      <div
+        class="fixed bottom-6 left-0 right-0 z-40 flex justify-center w-full max-w-md mx-auto pointer-events-none"
+      >
+        <button
+          class="pointer-events-auto flex items-center justify-center gap-2 bg-ink text-white hover:bg-black px-6 py-3 rounded-full shadow-floating transition-all transform active:scale-95 border border-white/10 backdrop-blur-sm"
+        >
+          <span class="material-symbols-outlined text-[20px]">add</span>
+          <span class="font-medium text-sm tracking-wide">Log New Class</span>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

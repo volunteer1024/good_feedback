@@ -1,0 +1,336 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>My Studio - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#137fec',
+              'background-light': '#FBFBF9', // Ivory white notion-like
+              'background-dark': '#191919', // Dark notion-like
+              'surface-light': '#FFFFFF',
+              'surface-dark': '#202020',
+              'text-main': '#37352f', // Notion-like text color
+              'text-secondary': '#787774',
+              warning: '#e16b16',
+            },
+            fontFamily: {
+              display: ['Inter', 'sans-serif'],
+              sans: ['Inter', 'sans-serif'],
+            },
+            borderRadius: { DEFAULT: '0.375rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Custom scrollbar hiding for cleaner look */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-text-main dark:text-gray-100 antialiased selection:bg-primary/20"
+  >
+    <div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden pb-[80px]">
+      <!-- Top App Bar -->
+      <header
+        class="sticky top-0 z-20 flex items-center bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-200/50 dark:border-gray-800"
+      >
+        <h2
+          class="text-text-main dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] flex-1 flex items-center gap-2"
+        >
+          <span class="material-symbols-outlined filled">space_dashboard</span>
+          My Studio
+        </h2>
+        <div class="flex items-center justify-end">
+          <button
+            class="flex items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-gray-200 dark:bg-gray-700"
+          >
+            <img
+              alt="User Profile"
+              class="h-full w-full object-cover"
+              data-alt="User avatar with initials"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGYvbJqlMzfiHuZWYe8A67yqARZj77BQR_Xkdqg-lkn0EYDKgDNM_Jqn7THpGIffvF1aX4syyEON-fe5_KzKIbHURXRPTl-WLdLcwQvP-jS70SEp5pm_ITE75-LIbD_qxk107R8FUy4Wg5w1ccs1_UqXahgL4idVZw-X0Sw48_ixIaYF1tzNKaWd5QmDGoJR_UasuGkCYwPhmeREdQZyaEEK1VnSGt6380LcDbzYOqeCodgyegnxBgwCl5M_9T80TUEND1kZFfFw"
+            />
+          </button>
+        </div>
+      </header>
+      <main class="flex flex-col gap-6 px-4 pt-6">
+        <!-- Statistics Grid -->
+        <section>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-text-secondary text-sm">bar_chart</span>
+            <h3
+              class="text-text-secondary dark:text-gray-400 text-xs font-semibold uppercase tracking-wider"
+            >
+              Overview
+            </h3>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div
+              class="flex flex-col gap-1 rounded-lg p-4 bg-surface-light dark:bg-surface-dark shadow-[0_1px_2px_rgba(0,0,0,0.05)] border border-gray-200/60 dark:border-gray-700"
+            >
+              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Today</p>
+              <p class="text-text-main dark:text-white text-2xl font-bold tracking-tight">
+                4.5<span class="text-base font-normal text-text-secondary dark:text-gray-500 ml-1"
+                  >h</span
+                >
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-1 rounded-lg p-4 bg-surface-light dark:bg-surface-dark shadow-[0_1px_2px_rgba(0,0,0,0.05)] border border-gray-200/60 dark:border-gray-700"
+            >
+              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Last Week</p>
+              <p class="text-text-main dark:text-white text-2xl font-bold tracking-tight">
+                28<span class="text-base font-normal text-text-secondary dark:text-gray-500 ml-1"
+                  >h</span
+                >
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-1 rounded-lg p-4 bg-surface-light dark:bg-surface-dark shadow-[0_1px_2px_rgba(0,0,0,0.05)] border border-gray-200/60 dark:border-gray-700"
+            >
+              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Last Month</p>
+              <p class="text-text-main dark:text-white text-2xl font-bold tracking-tight">
+                112<span class="text-base font-normal text-text-secondary dark:text-gray-500 ml-1"
+                  >h</span
+                >
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-1 rounded-lg p-4 bg-surface-light dark:bg-surface-dark shadow-[0_1px_2px_rgba(0,0,0,0.05)] border border-gray-200/60 dark:border-gray-700"
+            >
+              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Last Year</p>
+              <p class="text-text-main dark:text-white text-2xl font-bold tracking-tight">
+                1.2k<span class="text-base font-normal text-text-secondary dark:text-gray-500 ml-1"
+                  >h</span
+                >
+              </p>
+            </div>
+          </div>
+        </section>
+        <!-- Action Button: Edit Task Bank -->
+        <section>
+          <button
+            class="w-full group relative flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.08)] border border-gray-200 dark:border-gray-700 active:scale-[0.99] transition-transform"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary"
+              >
+                <span class="material-symbols-outlined">edit_note</span>
+              </div>
+              <div class="flex flex-col items-start">
+                <span class="font-semibold text-text-main dark:text-white">Edit Task Bank</span>
+                <span class="text-xs text-text-secondary dark:text-gray-400"
+                  >Manage homework presets</span
+                >
+              </div>
+            </div>
+            <span
+              class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors"
+              >chevron_right</span
+            >
+          </button>
+        </section>
+        <!-- Threshold Warning Section -->
+        <section class="flex flex-col gap-2">
+          <div class="flex items-center justify-between px-1">
+            <h3
+              class="text-warning text-sm font-bold flex items-center gap-2 uppercase tracking-wide"
+            >
+              <span class="material-symbols-outlined text-lg">warning</span>
+              Renewal Needed
+            </h3>
+            <span class="bg-warning/10 text-warning px-2 py-0.5 rounded text-xs font-medium"
+              >≤ 3 classes</span
+            >
+          </div>
+          <div
+            class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.05)] border border-gray-200/60 dark:border-gray-700 divide-y divide-gray-100 dark:divide-gray-800"
+          >
+            <!-- Student Item 1 -->
+            <div
+              class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+            >
+              <div
+                class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0 border border-gray-100 dark:border-gray-700"
+                data-alt="Portrait of student Alice"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFvWgQtSK97pTLYVtETppaxr3A9d6HPBQhCysm-aONrPp2vzr3tETkVHMXsDviE9-Zu5NkVfcDj_2JCP7Y8yeWOwpRegjSN80Q9rOFw9QVjQ_ZvlqMpRQbudMToea0fRxP15kxn4aR65Nd2xVkIqQZaFsgv61mu9HMehrN1mn4o_NhnAtyCRLt7e9anpMSuKgxNwIvWhcnAv0c5TNjvZZnE5PNdnic4kddt6VnYrUesJtYyQrSEVijItVta9Ewdda4C9bo9A4bUg');
+                "
+              ></div>
+              <div class="flex flex-1 flex-col">
+                <p class="text-text-main dark:text-white text-base font-medium leading-tight">
+                  Alice Morgan
+                </p>
+                <p class="text-text-secondary text-xs">Piano • Advanced</p>
+              </div>
+              <div
+                class="shrink-0 flex items-center gap-1 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-md border border-red-100 dark:border-red-900/30"
+              >
+                <span class="material-symbols-outlined text-red-500 text-sm">hourglass_bottom</span>
+                <p class="text-red-600 dark:text-red-400 text-sm font-bold">2 left</p>
+              </div>
+            </div>
+            <!-- Student Item 2 -->
+            <div
+              class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+            >
+              <div
+                class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0 border border-gray-100 dark:border-gray-700"
+                data-alt="Portrait of student Benji"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAEv9WkY_sQd-SvcALw_5yr8AtXAbNSnDxTAsdTt6h4p5oeAzF30aW7X-xDEIyN4snevgwUaWCLP_i-tTtJOc_4ZYq2mwe8jXO8Kvpnj_wXpzhE8okuSi5lI4mgoUbVhJnroVFd6xsBFHglPONRzOTRXX3n42ydSNjzQymLoFhDrtfdgJB8CFcJm2BdGQCfEnv-N-z1V3l3_OXQelikTtrlcuFx7-vQbzBBcwPxr1xH7qZYMosP5U47eST3-NhYYgGya1VAi3r5Kg');
+                "
+              ></div>
+              <div class="flex flex-1 flex-col">
+                <p class="text-text-main dark:text-white text-base font-medium leading-tight">
+                  Benji Smith
+                </p>
+                <p class="text-text-secondary text-xs">Guitar • Beginner</p>
+              </div>
+              <div
+                class="shrink-0 flex items-center gap-1 bg-orange-50 dark:bg-orange-900/20 px-2 py-1 rounded-md border border-orange-100 dark:border-orange-900/30"
+              >
+                <span class="material-symbols-outlined text-orange-500 text-sm"
+                  >hourglass_bottom</span
+                >
+                <p class="text-orange-600 dark:text-orange-400 text-sm font-bold">3 left</p>
+              </div>
+            </div>
+            <!-- Student Item 3 -->
+            <div
+              class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+            >
+              <div
+                class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0 border border-gray-100 dark:border-gray-700"
+                data-alt="Portrait of student Sarah"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAoNdgTrLnkC0j3q8fchRdIOhoggPLSECOUYZzs-Mofwfhiv7RPtP3UDDwm7dUf_3H6vPBz3ilUV4zt-BO0UWF0deDt08rwiuZxAmvVOToG6puzoN7O26J8UKZbKcJa9vNVAMdAo6Hu9NChk2YUKXawNOENkRtDX_Yh-7FPW4-Yy2mZ1EbQBedfEpszFxh2ZRaWutcYMECxlOa0wL1uxLwwyZ_9OM8rqGmXi9ET0QhY1rBFBA-77TIEEwQ3FEW1BprNlqIYEsG0lA');
+                "
+              ></div>
+              <div class="flex flex-1 flex-col">
+                <p class="text-text-main dark:text-white text-base font-medium leading-tight">
+                  Sarah Lee
+                </p>
+                <p class="text-text-secondary text-xs">Violin • Intermediate</p>
+              </div>
+              <div
+                class="shrink-0 flex items-center gap-1 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-md border border-red-100 dark:border-red-900/30"
+              >
+                <span class="material-symbols-outlined text-red-500 text-sm">hourglass_empty</span>
+                <p class="text-red-600 dark:text-red-400 text-sm font-bold">1 left</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Utility Links -->
+        <section class="mt-2">
+          <div
+            class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.05)] border border-gray-200/60 dark:border-gray-700 divide-y divide-gray-100 dark:divide-gray-800"
+          >
+            <button
+              class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 w-full text-left"
+            >
+              <span class="text-sm font-medium text-text-main dark:text-white"
+                >Studio Settings</span
+              >
+              <span class="material-symbols-outlined text-gray-400 text-sm">arrow_forward_ios</span>
+            </button>
+            <button
+              class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 w-full text-left"
+            >
+              <span class="text-sm font-medium text-text-main dark:text-white"
+                >Billing &amp; Invoices</span
+              >
+              <span class="material-symbols-outlined text-gray-400 text-sm">arrow_forward_ios</span>
+            </button>
+            <button
+              class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 w-full text-left"
+            >
+              <span class="text-sm font-medium text-red-500">Log out</span>
+              <span class="material-symbols-outlined text-gray-400 text-sm">logout</span>
+            </button>
+          </div>
+        </section>
+        <div class="h-6 w-full"></div>
+      </main>
+      <!-- Bottom Navigation Bar -->
+      <nav
+        class="fixed bottom-0 left-0 right-0 bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 pb-safe z-50"
+      >
+        <div class="flex justify-around items-center h-16">
+          <!-- Home Tab -->
+          <button
+            class="flex flex-1 flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-500 hover:text-text-main dark:hover:text-gray-300"
+          >
+            <span class="material-symbols-outlined text-2xl">home</span>
+            <span class="text-[10px] font-medium">Home</span>
+          </button>
+          <!-- Students Tab -->
+          <button
+            class="flex flex-1 flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-500 hover:text-text-main dark:hover:text-gray-300"
+          >
+            <span class="material-symbols-outlined text-2xl">groups</span>
+            <span class="text-[10px] font-medium">Students</span>
+          </button>
+          <!-- Feedback Tab -->
+          <button
+            class="flex flex-1 flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-500 hover:text-text-main dark:hover:text-gray-300"
+          >
+            <span class="material-symbols-outlined text-2xl">chat_bubble</span>
+            <span class="text-[10px] font-medium">Feedback</span>
+          </button>
+          <!-- My Tab (Active) -->
+          <button class="flex flex-1 flex-col items-center justify-center gap-1 text-primary">
+            <span
+              class="material-symbols-outlined fill-current text-2xl font-variation-settings-fill"
+              >person</span
+            >
+            <span class="text-[10px] font-bold">My</span>
+          </button>
+        </div>
+        <!-- Safe area spacing for iOS home indicator -->
+        <div
+          class="h-[env(safe-area-inset-bottom)] w-full bg-surface-light dark:bg-surface-dark"
+        ></div>
+      </nav>
+    </div>
+    <style>
+      /* Fill variation for active icon */
+      .font-variation-settings-fill {
+        font-variation-settings: 'FILL' 1;
+      }
+    </style>
+  </body>
+</html>

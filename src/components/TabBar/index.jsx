@@ -7,7 +7,7 @@ const TabBar = ({ activeTab = 'home' }) => {
     { id: 'home', icon: '🏠', label: 'Home', path: '/pages/index/index' },
     { id: 'students', icon: '👥', label: 'Students', path: '/pages/students/index' },
     { id: 'feedback', icon: '💬', label: 'Feedback', path: '/pages/index/index' },
-    { id: 'settings', icon: '⚙️', label: 'Settings', path: '/pages/index/index' },
+    { id: 'my', icon: '👤', label: 'My', path: '/pages/my/index' },
   ];
 
   const handleTabClick = (tab) => {
