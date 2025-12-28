@@ -71,9 +71,6 @@ const My = () => {
             </View>
           </View>
         </View>
-
-        {/* Edit Task Bank Button */}
-
         {/* Renewal Warning Section */}
         {students.length > 0 && (
           <View className="section">

@@ -88,6 +88,15 @@
         background-color: @accent-bg;
       }
     }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120rpx 40rpx;
+      text-align: center;
+    }
   }
 
   .student-card {
@@ -148,6 +157,27 @@
           border-color: @warning;
           padding: 4rpx;
           background-clip: content-box;
+        }
+      }
+
+      .avatar-initial {
+        width: 112rpx;
+        height: 112rpx;
+        border-radius: 50%;
+        border: 4rpx solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 40rpx;
+        font-weight: 600;
+
+        &.ring-active {
+          border-color: @primary;
+        }
+
+        &.ring-warning {
+          border-color: @warning;
         }
       }
 

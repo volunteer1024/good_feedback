@@ -1,7 +1,8 @@
 import { Image, ScrollView, Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { useState } from 'react';
 import TabBar from '../../components/TabBar';
+import { studentService } from '../../services/student';
 import './index.less';
 
 // Simple icons using characters or CSS
@@ -9,136 +10,167 @@ const IconCheck = () => <View className="check-mark"></View>;
 
 const IconCalendar = () => <Text style={{ fontSize: '28rpx', marginRight: '8rpx' }}>📅</Text>;
 
+// 获取莫兰迪色系背景色
+const getMorandiColor = (name) => {
+  const colors = [
+    '#A3B18A',
+    '#ADC178',
+    '#DDE5B6',
+    '#F0EAD6',
+    '#A2D2FF',
+    '#BDE0FE',
+    '#FFC8DD',
+    '#FFAFCC',
+    '#FFB703',
+    '#8E9AAF',
+  ];
+  const charCode = (name || 'A').charCodeAt((name || 'A').length - 1);
+  return colors[charCode % colors.length];
+};
+
+// 获取今天的日期
+const getTodayStr = () => {
+  const now = new Date();
+  const month = now.toLocaleString('en-US', { month: 'short' });
+  const day = now.getDate();
+  const year = now.getFullYear();
+  return `${month} ${day}, ${year}`;
+};
+
 const Index = () => {
-  const [students, setStudents] = useState([
-    {
-      id: 1,
-      name: 'Alice M.',
-      timeLeft: 10,
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop',
-      selected: true,
-    },
-    {
-      id: 2,
-      name: 'Bob D.',
-      timeLeft: 8,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-      selected: false,
-    },
-    {
-      id: 3,
-      name: 'Charlie K.',
-      timeLeft: 2,
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
-      selected: true,
-      low: true,
-    },
-    {
-      id: 4,
-      name: 'Diana P.',
-      timeLeft: 15,
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop',
-      selected: false,
-    },
-    {
-      id: 5,
-      name: 'Evan R.',
-      timeLeft: 3,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-      selected: true,
-      low: true,
-    },
-    {
-      id: 6,
-      name: 'Fiona G.',
-      timeLeft: 12,
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-      selected: false,
-    },
-    {
-      id: 7,
-      name: 'George H.',
-      timeLeft: 20,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-      selected: false,
-    },
-  ]);
+  const [students, setStudents] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  useDidShow(() => {
+    loadStudents();
+  });
+
+  const loadStudents = () => {
+    const allStudents = studentService.getStudents();
+    // 只显示 In Class 状态的学生
+    const inClassStudents = allStudents.filter((s) => s.status === 'In Class');
+    setStudents(inClassStudents);
+    // 默认全选
+    setSelectedIds(inClassStudents.map((s) => s.id));
+  };
 
   const toggleSelect = (id) => {
-    setStudents((prev) => prev.map((s) => (s.id === id ? { ...s, selected: !s.selected } : s)));
-  };
-
-  const selectAll = () => {
-    const allSelected = students.every((s) => s.selected);
-    setStudents((prev) => prev.map((s) => ({ ...s, selected: !allSelected })));
-  };
-
-  const handleComplete = () => {
-    const selectedCount = students.filter((s) => s.selected).length;
-    if (selectedCount === 0) {
-      Taro.showToast({ title: 'Please select students', icon: 'none' });
-      return;
-    }
-    Taro.showToast({
-      title: 'Registration success',
-      icon: 'success',
+    setSelectedIds((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((sid) => sid !== id);
+      }
+      return [...prev, id];
     });
   };
 
-  const selectedCount = students.filter((s) => s.selected).length;
+  const selectAll = () => {
+    if (selectedIds.length === students.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(students.map((s) => s.id));
+    }
+  };
+
+  const handleComplete = () => {
+    if (selectedIds.length === 0) {
+      Taro.showToast({ title: 'Please select students', icon: 'none' });
+      return;
+    }
+
+    // 跳转到反馈页面，传递选中的学生ID
+    Taro.navigateTo({
+      url: `/pages/feedback/index?studentIds=${selectedIds.join(',')}`,
+    });
+  };
+
+  const handleAddStudent = () => {
+    Taro.navigateTo({ url: '/pages/students/index' });
+  };
+
+  const selectedCount = selectedIds.length;
+  const allSelected = students.length > 0 && selectedIds.length === students.length;
 
   return (
     <View className="attendance-page">
       <View className="header">
         <View className="header-top">
           <View className="title-group">
-            <Text className="title">Today&apos;s Class</Text>
+            <Text className="title">Today's Class</Text>
             <View className="subtitle">
               <IconCalendar />
-              <Text>Oct 24, 2023</Text>
+              <Text>{getTodayStr()}</Text>
             </View>
           </View>
           <View className="select-all-btn" onClick={selectAll}>
-            {students.every((s) => s.selected) ? 'Deselect All' : 'Select All'}
+            {allSelected ? 'Deselect All' : 'Select All'}
           </View>
         </View>
       </View>
 
       <ScrollView className="main-content" scrollY>
-        <View className="student-grid">
-          {students.map((student) => (
-            <View
-              key={student.id}
-              className={`student-card ${student.selected ? 'active' : ''}`}
-              onClick={() => toggleSelect(student.id)}
-            >
-              <View className={`check-icon ${student.selected ? 'checked' : ''}`}>
-                {student.selected && <IconCheck />}
-              </View>
-
-              <View className="avatar-wrapper">
-                <Image
-                  className={`avatar ${student.selected ? (student.low ? 'ring-warning' : 'ring-active') : ''}`}
-                  src={student.avatar}
-                  mode="aspectFill"
-                />
-                {student.low && <View className="badge">Low</View>}
-              </View>
-
-              <View className="info">
-                <Text className="name">{student.name}</Text>
-                <Text className={`status ${student.low ? 'warning' : ''}`}>
-                  {student.timeLeft} hrs left
-                </Text>
-              </View>
+        {students.length === 0 ? (
+          <View className="empty-state">
+            <Text style={{ fontSize: '80rpx', marginBottom: '20rpx' }}>👥</Text>
+            <Text style={{ color: '#999', fontSize: '28rpx', marginBottom: '40rpx' }}>
+              No students in class
+            </Text>
+            <View className="add-student-btn" onClick={handleAddStudent}>
+              <Text style={{ marginRight: '10rpx' }}>+</Text>
+              <Text>Add Student to Class</Text>
             </View>
-          ))}
-        </View>
+          </View>
+        ) : (
+          <>
+            <View className="student-grid">
+              {students.map((student) => {
+                const isSelected = selectedIds.includes(student.id);
+                const isLowHours = student.remainingHours <= 5;
 
-        <View className="add-student-btn">
-          <Text style={{ marginRight: '10rpx' }}>+</Text>
-          <Text>Add Student to Class</Text>
-        </View>
+                return (
+                  <View
+                    key={student.id}
+                    className={`student-card ${isSelected ? 'active' : ''}`}
+                    onClick={() => toggleSelect(student.id)}
+                  >
+                    <View className={`check-icon ${isSelected ? 'checked' : ''}`}>
+                      {isSelected && <IconCheck />}
+                    </View>
+
+                    <View className="avatar-wrapper">
+                      {student.avatar ? (
+                        <Image
+                          className={`avatar ${isSelected ? (isLowHours ? 'ring-warning' : 'ring-active') : ''}`}
+                          src={student.avatar}
+                          mode="aspectFill"
+                        />
+                      ) : (
+                        <View
+                          className={`avatar-initial ${isSelected ? (isLowHours ? 'ring-warning' : 'ring-active') : ''}`}
+                          style={{ backgroundColor: getMorandiColor(student.name) }}
+                        >
+                          <Text>{student.name.charAt(student.name.length - 1)}</Text>
+                        </View>
+                      )}
+                      {isLowHours && <View className="badge">Low</View>}
+                    </View>
+
+                    <View className="info">
+                      <Text className="name">{student.name}</Text>
+                      <Text className={`status ${isLowHours ? 'warning' : ''}`}>
+                        {student.remainingHours} hrs left
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })}
+            </View>
+
+            <View className="add-student-btn" onClick={handleAddStudent}>
+              <Text style={{ marginRight: '10rpx' }}>+</Text>
+              <Text>Add Student to Class</Text>
+            </View>
+          </>
+        )}
       </ScrollView>
 
       <View className="bottom-action">

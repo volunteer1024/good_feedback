@@ -2,6 +2,7 @@ export default {
   pages: [
     'pages/index/index',
     'pages/attendance/index',
+    'pages/feedback/index',
     'pages/task/index',
     'pages/students/index',
     'pages/my/index',
