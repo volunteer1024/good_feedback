@@ -1,152 +1,186 @@
 @import '../../styles/variables.less';
 
+@color-primary: #137fec;
+@color-bg: #fdfdf8;
+@color-text: #37352f;
+@color-gray: #787774;
+@color-border: #e0e0e0;
+
 .task-page {
   width: 100%;
   min-height: 100vh;
-  background-color: @background-light;
-  color: @text-main;
+  background-color: @color-bg;
+  color: @color-text;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 
   .header {
     position: sticky;
     top: 0;
-    z-index: 10;
-    background-color: fade(@background-light, 95%);
+    z-index: 50;
+    background-color: fade(@color-bg, 95%);
     backdrop-filter: blur(8rpx);
-    padding: 32rpx 32rpx 16rpx;
-    border-bottom: 2rpx solid transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 16rpx 32rpx;
+    border-bottom: 2rpx solid transparent;
 
-    .btn-icon {
+    .btn-round {
       width: 80rpx;
       height: 80rpx;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 50%;
-      font-size: 40rpx;
-      color: @text-main;
       transition: background-color 0.2s;
 
       &:active {
         background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      &.primary-light {
+        background-color: fade(@color-primary, 10%);
+        .primary-text {
+          color: @color-primary;
+        }
+        &:active {
+          background-color: fade(@color-primary, 20%);
+        }
       }
     }
 
     .title {
       font-size: 36rpx;
       font-weight: 600;
-      color: @text-main;
-    }
-
-    .btn-add {
-      background-color: fade(@primary, 10%);
-      color: @primary;
-
-      &:active {
-        background-color: fade(@primary, 20%);
-      }
+      color: @color-text;
     }
   }
 
   .search-section {
-    padding: 32rpx;
+    padding: 16rpx 32rpx;
 
-    .search-bar {
-      height: 88rpx;
-      background-color: @surface;
-      border: 2rpx solid @border-light;
+    .search-box {
+      background-color: #fff;
+      border: 2rpx solid @color-border;
       border-radius: 16rpx;
+      height: 88rpx;
       display: flex;
       align-items: center;
       padding: 0 24rpx;
       box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.02);
+      transition: all 0.2s;
 
       &:focus-within {
-        border-color: @primary;
-        box-shadow: 0 0 0 4rpx fade(@primary, 20%);
+        border-color: fade(@color-primary, 50%);
+        box-shadow: 0 0 0 4rpx fade(@color-primary, 10%);
       }
 
-      .icon-search {
-        font-size: 32rpx;
-        color: @text-muted;
+      .icon {
+        color: @color-gray;
+        font-size: 40rpx;
         margin-right: 16rpx;
       }
 
-      .search-input {
+      .input {
         flex: 1;
         font-size: 28rpx;
-        color: @text-main;
-        background: transparent;
+        color: @color-text;
       }
 
-      .shortcut-hint {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 40rpx;
-        padding: 0 12rpx;
-        border-radius: 8rpx;
-        border: 2rpx solid @border-light;
+      .shortcut {
         background-color: #f9fafb;
-
+        border: 2rpx solid @color-border;
+        border-radius: 8rpx;
+        padding: 4rpx 12rpx;
         text {
           font-size: 20rpx;
-          color: @text-muted;
+          color: @color-gray;
           font-weight: 500;
         }
       }
     }
   }
 
-  .library-header {
-    padding: 24rpx 32rpx;
+  .filter-section {
+    padding: 0 32rpx 8rpx;
+
+    .scroll-view {
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 64rpx;
+      padding: 0 32rpx;
+      border-radius: 32rpx;
+      margin-right: 16rpx;
+      border: 2rpx solid @color-border;
+      background-color: #fff;
+      transition: all 0.2s;
+
+      text {
+        font-size: 24rpx;
+        font-weight: 500;
+        color: @color-text;
+      }
+
+      &.active {
+        background-color: @color-text;
+        border-color: @color-text;
+        text {
+          color: #fff;
+        }
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  .library-stats {
+    padding: 24rpx 32rpx 16rpx;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 
-    .section-title {
+    .label {
       font-size: 24rpx;
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 2rpx;
-      color: @text-muted;
+      color: @color-gray;
+      letter-spacing: 1rpx;
     }
-
-    .task-count {
+    .count {
       font-size: 24rpx;
-      color: @text-muted;
+      color: @color-gray;
     }
   }
 
   .task-list {
     flex: 1;
-    padding: 0 32rpx 200rpx; // Bottom padding for TabBar
+    padding: 0 32rpx 200rpx;
     display: flex;
     flex-direction: column;
 
     .task-card {
-      background-color: @surface;
-      border: 2rpx solid fade(@border-light, 50%);
+      background-color: #fff;
+      border: 2rpx solid fade(@color-border, 50%);
       border-radius: 16rpx;
       padding: 24rpx;
+      margin-bottom: 16rpx;
       display: flex;
       align-items: center;
       box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.02);
       transition: all 0.2s;
-      margin-bottom: 24rpx;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
 
       &:active {
-        background-color: @accent-bg;
-        border-color: fade(@primary, 30%);
         box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.04);
+        border-color: fade(@color-primary, 30%);
       }
 
       .icon-box {
@@ -156,53 +190,87 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 40rpx;
         margin-right: 24rpx;
-        flex-shrink: 0; // Prevent shrinking
+        flex-shrink: 0;
+
+        text {
+          font-size: 40rpx;
+        }
 
         &.orange {
-          background-color: #fff7ed;
+          background: #fff7ed;
           color: #ea580c;
         }
         &.blue {
-          background-color: #eff6ff;
+          background: #eff6ff;
           color: #2563eb;
         }
         &.purple {
-          background-color: #faf5ff;
+          background: #faf5ff;
           color: #9333ea;
         }
         &.teal {
-          background-color: #f0fdfa;
+          background: #f0fdfa;
           color: #0d9488;
         }
       }
 
-      .card-content {
+      .content {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 8rpx;
-        min-width: 0; // Enable text truncation
+        min-width: 0;
 
-        .task-name {
+        .task-title {
           font-size: 28rpx;
           font-weight: 500;
-          color: @text-main;
-          line-height: 1.2;
+          color: @color-text;
+          margin-bottom: 8rpx;
+          display: block;
+          white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          white-space: nowrap;
         }
 
-        .meta-row {
+        .meta {
           display: flex;
           align-items: center;
-          gap: 16rpx;
+
+          .tag {
+            padding: 2rpx 12rpx;
+            border-radius: 6rpx;
+            font-size: 20rpx;
+            font-weight: 500;
+
+            &.orange {
+              background: fade(#fff7ed, 80%);
+              color: #c2410c;
+              border: 1rpx solid fade(#ea580c, 10%);
+            }
+            &.blue {
+              background: fade(#eff6ff, 80%);
+              color: #1d4ed8;
+              border: 1rpx solid fade(#2563eb, 10%);
+            }
+            &.purple {
+              background: fade(#faf5ff, 80%);
+              color: #7e22ce;
+              border: 1rpx solid fade(#9333ea, 10%);
+            }
+            &.teal {
+              background: fade(#f0fdfa, 80%);
+              color: #0f766e;
+              border: 1rpx solid fade(#0d9488, 10%);
+            }
+          }
+
+          .dot {
+            margin: 0 12rpx;
+            font-size: 20rpx;
+            color: @color-gray;
+          }
 
           .duration {
             font-size: 20rpx;
-            color: @text-muted;
+            color: @color-gray;
           }
         }
       }
@@ -213,16 +281,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: @text-muted;
-        font-size: 40rpx;
-        margin-left: 16rpx;
+        color: @color-gray;
+
+        text {
+          font-size: 40rpx;
+        }
       }
     }
 
-    .create-prompt {
-      margin-top: 32rpx;
+    .create-card {
+      margin-top: 16rpx;
       padding: 48rpx;
-      border: 4rpx dashed @border-light;
+      border: 4rpx dashed @color-border;
       border-radius: 24rpx;
       display: flex;
       flex-direction: column;
@@ -230,22 +300,24 @@
       justify-content: center;
       gap: 16rpx;
 
-      .prompt-icon {
+      .icon-circle {
         width: 80rpx;
         height: 80rpx;
         border-radius: 50%;
         background-color: #f3f4f6;
-        color: #9ca3af;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 40rpx;
+        color: #9ca3af;
+        text {
+          font-size: 40rpx;
+        }
       }
 
-      .prompt-text {
+      .text {
         font-size: 28rpx;
+        color: @color-gray;
         font-weight: 500;
-        color: @text-muted;
       }
     }
   }
@@ -258,11 +330,9 @@
     right: 0;
     bottom: 0;
     z-index: 1000;
-    display: flex; // Bottom sheet on mobile? Design shows center but bottom heavy
+    display: flex;
     justify-content: center;
-
-    // Use flex-end for bottom sheet feel on mobile, or center for modal
-    align-items: center;
+    align-items: flex-end; // Bottom sheet style mostly
 
     .backdrop {
       position: absolute;
@@ -270,161 +340,231 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(4rpx);
     }
 
     .modal-container {
       position: relative;
-      width: 90%;
-      max-width: 640rpx;
-      max-height: 85vh;
-      background-color: @background-light;
-      border-radius: 24rpx;
-      box-shadow: 0 40rpx 80rpx -12rpx rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 900rpx; // Adapt for larger screens too
+      height: 90vh;
+      background: #fff;
+      border-top-left-radius: 32rpx;
+      border-top-right-radius: 32rpx;
+      box-shadow: 0 -20rpx 40rpx rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      animation: modal-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: slideUp 0.3s ease-out;
 
       .modal-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 32rpx 40rpx;
-        border-bottom: 2rpx solid @border-light;
+        border-bottom: 2rpx solid fade(@color-border, 50%);
 
         .modal-title {
           font-size: 32rpx;
           font-weight: 600;
-          color: @text-main;
+          color: @color-text;
         }
 
         .btn-close {
-          width: 64rpx;
-          height: 64rpx;
+          padding: 8rpx;
+          border-radius: 50%;
+          color: @color-gray;
+          background: #f3f4f6;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 50%;
-          color: @text-muted;
-          background-color: #f3f4f6;
-          font-size: 32rpx;
+          width: 56rpx;
+          height: 56rpx;
 
+          text {
+            font-size: 36rpx;
+          }
           &:active {
-            background-color: #e5e7eb;
+            background: #e5e7eb;
           }
         }
       }
 
       .modal-body {
-        flex: 1;
         padding: 40rpx;
+        flex: 1;
         overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 40rpx;
 
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 12rpx;
+        .form-item {
+          margin-bottom: 40rpx;
 
           .label {
+            display: block;
             font-size: 24rpx;
             font-weight: 600;
-            color: @text-muted;
+            color: @color-gray;
             text-transform: uppercase;
             letter-spacing: 1rpx;
+            margin-bottom: 16rpx;
           }
 
-          .input-wrapper {
-            position: relative;
+          .sub-label {
+            font-size: 22rpx;
+            color: @color-gray;
+            margin-bottom: 16rpx;
+            display: block;
+          }
 
-            .input-field,
-            .select-field,
-            .textarea-field {
-              width: 100%;
-              background-color: @surface; // Or slightly darker? Design uses bg-gray-50
-              background-color: #f9fafb;
-              border: 2rpx solid @border-light;
-              border-radius: 16rpx;
+          .input-field,
+          .textarea-field {
+            width: 100%;
+            background: #f9fafb;
+            border: 2rpx solid @color-border;
+            border-radius: 16rpx;
+            padding: 24rpx 32rpx;
+            font-size: 28rpx;
+            color: @color-text;
+            box-sizing: border-box;
+
+            &:focus {
+              border-color: @color-primary;
+              background: #fff;
+            }
+          }
+          .textarea-field.small {
+            height: 160rpx;
+          }
+
+          .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16rpx;
+
+            .checkbox-item {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
               padding: 24rpx 32rpx;
-              font-size: 28rpx;
-              color: @text-main;
+              border: 2rpx solid @color-border;
+              border-radius: 16rpx;
+              background: fade(#f9fafb, 50%);
+              transition: all 0.2s;
 
-              &:focus {
-                border-color: @primary;
-                background-color: #fff;
+              &.disabled {
+                opacity: 0.6;
+                background: #f3f4f6;
+                pointer-events: none;
+              }
+
+              .text {
+                font-size: 28rpx;
+                font-weight: 500;
+                color: @color-text;
+              }
+
+              .checkbox {
+                width: 36rpx;
+                height: 36rpx;
+                border-radius: 8rpx;
+                border: 2rpx solid #d1d5db;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &.checked {
+                  background: @color-primary;
+                  border-color: @color-primary;
+                  color: #fff;
+                  text {
+                    font-size: 28rpx;
+                    font-weight: bold;
+                  }
+                }
+              }
+
+              &:active {
+                background: #f3f4f6;
               }
             }
 
-            .select-field {
-              // appearance: none; // Taro Picker doesn't use select
-            }
+            .custom-status {
+              background: fade(#f9fafb, 80%);
+              border: 2rpx solid fade(@color-primary, 30%);
+              border-radius: 16rpx;
+              padding: 24rpx;
+              display: flex;
+              flex-direction: column;
+              gap: 16rpx;
 
-            .textarea-field {
-              height: 160rpx;
-            }
+              .custom-input {
+                background: #fff;
+                border: 2rpx solid #e5e7eb;
+                border-radius: 8rpx;
+                padding: 12rpx 20rpx;
+                font-size: 26rpx;
+              }
 
-            .icon-prefix {
-              position: absolute;
-              left: 32rpx;
-              top: 50%;
-              transform: translateY(-50%);
-              font-size: 32rpx;
-              color: @text-muted;
-            }
+              .custom-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 16rpx;
 
-            .icon-suffix {
-              position: absolute;
-              right: 32rpx;
-              top: 50%;
-              transform: translateY(-50%);
-              font-size: 32rpx;
-              color: @text-muted;
-              pointer-events: none;
-            }
+                .btn-text {
+                  font-size: 24rpx;
+                  color: @color-gray;
+                  padding: 8rpx 16rpx;
+                }
 
-            &.has-prefix .input-field {
-              padding-left: 80rpx;
+                .btn-small-primary {
+                  background: @color-primary;
+                  color: #fff;
+                  font-size: 24rpx;
+                  padding: 8rpx 20rpx;
+                  border-radius: 8rpx;
+                }
+              }
             }
           }
+        }
+
+        .switch-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-top: 24rpx;
+          border-top: 2rpx solid #f3f4f6;
         }
       }
 
       .modal-footer {
         padding: 32rpx 40rpx;
-        background-color: @surface;
-        border-top: 2rpx solid @border-light;
+        background: #fff;
+        border-top: 2rpx solid fade(@color-border, 50%);
         display: flex;
         gap: 24rpx;
 
-        .btn {
+        button {
           flex: 1;
           height: 88rpx;
+          border-radius: 16rpx;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 16rpx;
           font-size: 28rpx;
           font-weight: 600;
-          transition: all 0.2s;
 
           &.btn-cancel {
-            border: 2rpx solid @border-light;
-            color: @text-main;
-            background-color: transparent;
+            background: #fff;
+            border: 2rpx solid @color-border;
+            color: @color-text;
           }
 
           &.btn-submit {
-            background-color: @primary;
+            background: @color-primary;
             color: #fff;
-            box-shadow: 0 4rpx 12rpx fade(@primary, 30%);
-          }
-
-          &:active {
-            transform: scale(0.98);
+            border: none;
+            box-shadow: 0 4rpx 12rpx fade(@color-primary, 30%);
           }
         }
       }
@@ -432,13 +572,11 @@
   }
 }
 
-@keyframes modal-up {
+@keyframes slideUp {
   from {
-    opacity: 0;
-    transform: scale(0.9) translateY(40rpx);
+    transform: translateY(100%);
   }
   to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0);
   }
 }
