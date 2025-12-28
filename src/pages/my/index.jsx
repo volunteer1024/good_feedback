@@ -73,20 +73,6 @@ const My = () => {
         </View>
 
         {/* Edit Task Bank Button */}
-        <View className="section">
-          <View className="action-button">
-            <View className="action-left">
-              <View className="action-icon-box">
-                <Text style={{ fontSize: '40rpx' }}>✏️</Text>
-              </View>
-              <View className="action-text">
-                <Text className="action-title">Edit Task Bank</Text>
-                <Text className="action-subtitle">Manage homework presets</Text>
-              </View>
-            </View>
-            <Text className="action-chevron">›</Text>
-          </View>
-        </View>
 
         {/* Renewal Warning Section */}
         {students.length > 0 && (

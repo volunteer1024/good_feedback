@@ -1,4 +1,4 @@
-import { Icon, Image, Input, Picker, ScrollView, Text, Textarea, View } from '@tarojs/components';
+import { Image, Input, Picker, ScrollView, Text, Textarea, View } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import { useState } from 'react';
 import TabBar from '../../components/TabBar';
@@ -136,38 +136,54 @@ const Students = () => {
         <View className="header-top">
           <Text className="title">Student Management</Text>
           <View className="actions">
-            <View className="btn-icon">
-              <Text style={{ fontSize: '40rpx' }}>🔔</Text>
+            <View className="btn-icon btn-notification">
+              <Text className="material-symbols-outlined" style={{ fontSize: '44rpx' }}>
+                🔔
+              </Text>
             </View>
-            <View className="btn-icon btn-primary" onClick={handleAddStudent}>
-              <Text style={{ fontSize: '40rpx', color: '#fff' }}>+</Text>
+            <View className="btn-icon btn-add" onClick={handleAddStudent}>
+              <Text
+                className="material-symbols-outlined"
+                style={{ fontSize: '44rpx', color: '#fff' }}
+              >
+                +
+              </Text>
             </View>
           </View>
         </View>
 
-        <View className="search-bar">
-          <View style={{ marginRight: '16rpx', display: 'flex', alignItems: 'center' }}>
-            <Icon type="search" size="18" color="#999" />
+        <View className="search-container">
+          <View className="search-wrapper">
+            <View className="search-icon">
+              <Text className="material-symbols-outlined" style={{ fontSize: '40rpx' }}>
+                🔍
+              </Text>
+            </View>
+            <Input
+              className="search-input"
+              placeholder="Search by name..."
+              value={searchQuery}
+              onInput={(e) => setSearchQuery(e.detail.value)}
+              placeholderStyle="color: #9ca3af"
+            />
           </View>
-          <Input
-            className="search-input"
-            placeholder="Search by name..."
-            value={searchQuery}
-            onInput={(e) => setSearchQuery(e.detail.value)}
-          />
         </View>
       </View>
 
       <View className="filter-tabs">
-        {filters.map((f) => (
-          <View
-            key={f}
-            className={`tab ${activeFilter === f ? 'active' : ''}`}
-            onClick={() => setActiveFilter(f)}
-          >
-            {f}
+        <ScrollView scrollX className="tabs-scroll" showScrollbar={false}>
+          <View className="tabs-container">
+            {filters.map((f) => (
+              <View
+                key={f}
+                className={`tab ${activeFilter === f ? 'active' : ''}`}
+                onClick={() => setActiveFilter(f)}
+              >
+                <Text>{f}</Text>
+              </View>
+            ))}
           </View>
-        ))}
+        </ScrollView>
       </View>
 
       <ScrollView className="student-list" scrollY>
@@ -175,11 +191,11 @@ const Students = () => {
           filteredStudents.map((student) => (
             <View
               key={student.id}
-              className={`student-card ${student.status === 'Graduated' ? 'is-graduated' : ''}`}
+              className="student-card"
               onClick={() => handleEditStudent(student)}
             >
-              <View className="card-top">
-                <View className="card-left">
+              <View className="card-main">
+                <View className="avatar-section">
                   {student.avatar ? (
                     <Image className="avatar" src={student.avatar} mode="aspectFill" />
                   ) : (
@@ -190,24 +206,27 @@ const Students = () => {
                       {student.name.charAt(student.name.length - 1).toUpperCase()}
                     </View>
                   )}
+                </View>
 
-                  <View className="student-info">
-                    <Text className="name">{student.name}</Text>
-                    <View className="meta">
-                      <Text className={`status-badge ${getStatusClass(student.status)}`}>
-                        {student.status}
-                      </Text>
-                    </View>
+                <View className="info-section">
+                  <Text className="name">{student.name}</Text>
+                  <View className="meta-row">
+                    <Text className={`status-badge ${getStatusClass(student.status)}`}>
+                      {student.status}
+                    </Text>
+                    <Text className="id-text">
+                      ID: #{student.id.toString().slice(-4).padStart(4, '0')}
+                    </Text>
                   </View>
                 </View>
-                <Text style={{ color: '#ccc', fontSize: '40rpx' }}>›</Text>
               </View>
 
-              <View className="card-bottom">
-                <View>
-                  <Text className="hours">{student.remainingHours} hrs</Text>
+              <View className="card-footer">
+                <View className="hours-info">
+                  <Text className="hours-value">{student.remainingHours} hrs</Text>
+                  <Text className="hours-label">REMAINING</Text>
                 </View>
-                <Text className="label">Remaining</Text>
+                <Text className="chevron">›</Text>
               </View>
             </View>
           ))

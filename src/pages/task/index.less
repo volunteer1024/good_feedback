@@ -1,0 +1,518 @@
+@import '../../styles/variables.less';
+
+.task-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: @background-light;
+  color: @text-main;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: fade(@background-light, 95%);
+    backdrop-filter: blur(8rpx);
+    padding: 32rpx 32rpx 16rpx;
+    border-bottom: 2rpx solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn-icon {
+      width: 80rpx;
+      height: 80rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 40rpx;
+      color: @text-main;
+      transition: background-color 0.2s;
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    .title {
+      font-size: 36rpx;
+      font-weight: 600;
+      color: @text-main;
+    }
+
+    .btn-add {
+      background-color: fade(@primary, 10%);
+      color: @primary;
+
+      &:active {
+        background-color: fade(@primary, 20%);
+      }
+    }
+  }
+
+  .search-section {
+    padding: 32rpx;
+
+    .search-bar {
+      height: 88rpx;
+      background-color: @surface;
+      border: 2rpx solid @border-light;
+      border-radius: 16rpx;
+      display: flex;
+      align-items: center;
+      padding: 0 24rpx;
+      box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.02);
+
+      &:focus-within {
+        border-color: @primary;
+        box-shadow: 0 0 0 4rpx fade(@primary, 20%);
+      }
+
+      .icon-search {
+        font-size: 32rpx;
+        color: @text-muted;
+        margin-right: 16rpx;
+      }
+
+      .search-input {
+        flex: 1;
+        font-size: 28rpx;
+        color: @text-main;
+        background: transparent;
+      }
+
+      .shortcut-hint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40rpx;
+        padding: 0 12rpx;
+        border-radius: 8rpx;
+        border: 2rpx solid @border-light;
+        background-color: #f9fafb;
+
+        text {
+          font-size: 20rpx;
+          color: @text-muted;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .filter-section {
+    padding: 0 32rpx 16rpx;
+    display: flex;
+    white-space: nowrap;
+    overflow-x: auto;
+
+    // Hide scrollbar
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 64rpx;
+      padding: 0 32rpx;
+      border-radius: 32rpx;
+      font-size: 24rpx;
+      font-weight: 500;
+      margin-right: 16rpx;
+      transition: all 0.2s;
+      border: 2rpx solid transparent;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.active {
+        background-color: @text-main;
+        color: @background-light;
+      }
+
+      &.inactive {
+        background-color: @surface;
+        border-color: @border-light;
+        color: @text-main;
+
+        &:active {
+          background-color: #f9fafb;
+        }
+      }
+    }
+  }
+
+  .library-header {
+    padding: 24rpx 32rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .section-title {
+      font-size: 24rpx;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2rpx;
+      color: @text-muted;
+    }
+
+    .task-count {
+      font-size: 24rpx;
+      color: @text-muted;
+    }
+  }
+
+  .task-list {
+    flex: 1;
+    padding: 0 32rpx 200rpx; // Bottom padding for TabBar
+    display: flex;
+    flex-direction: column;
+
+    .task-card {
+      background-color: @surface;
+      border: 2rpx solid fade(@border-light, 50%);
+      border-radius: 16rpx;
+      padding: 24rpx;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.02);
+      transition: all 0.2s;
+      margin-bottom: 24rpx;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:active {
+        background-color: @accent-bg;
+        border-color: fade(@primary, 30%);
+        box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.04);
+      }
+
+      .icon-box {
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 12rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40rpx;
+        margin-right: 24rpx;
+        flex-shrink: 0; // Prevent shrinking
+
+        &.orange {
+          background-color: #fff7ed;
+          color: #ea580c;
+        }
+        &.blue {
+          background-color: #eff6ff;
+          color: #2563eb;
+        }
+        &.purple {
+          background-color: #faf5ff;
+          color: #9333ea;
+        }
+        &.teal {
+          background-color: #f0fdfa;
+          color: #0d9488;
+        }
+      }
+
+      .card-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8rpx;
+        min-width: 0; // Enable text truncation
+
+        .task-name {
+          font-size: 28rpx;
+          font-weight: 500;
+          color: @text-main;
+          line-height: 1.2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .meta-row {
+          display: flex;
+          align-items: center;
+          gap: 16rpx;
+
+          .tag {
+            padding: 2rpx 12rpx;
+            border-radius: 6rpx;
+            font-size: 20rpx;
+            font-weight: 500;
+            border: 1rpx solid transparent;
+
+            &.orange {
+              background-color: #fff7ed;
+              color: #c2410c;
+              border-color: fade(#ea580c, 10%);
+            }
+            &.blue {
+              background-color: #eff6ff;
+              color: #1d4ed8;
+              border-color: fade(#2563eb, 10%);
+            }
+            &.purple {
+              background-color: #faf5ff;
+              color: #7e22ce;
+              border-color: fade(#9333ea, 10%);
+            }
+            &.teal {
+              background-color: #f0fdfa;
+              color: #0f766e;
+              border-color: fade(#0d9488, 10%);
+            }
+          }
+
+          .duration {
+            font-size: 20rpx;
+            color: @text-muted;
+          }
+        }
+      }
+
+      .btn-more {
+        width: 64rpx;
+        height: 64rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: @text-muted;
+        font-size: 40rpx;
+        margin-left: 16rpx;
+      }
+    }
+
+    .create-prompt {
+      margin-top: 32rpx;
+      padding: 48rpx;
+      border: 4rpx dashed @border-light;
+      border-radius: 24rpx;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16rpx;
+
+      .prompt-icon {
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 50%;
+        background-color: #f3f4f6;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40rpx;
+      }
+
+      .prompt-text {
+        font-size: 28rpx;
+        font-weight: 500;
+        color: @text-muted;
+      }
+    }
+  }
+
+  // Modal Styles
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex; // Bottom sheet on mobile? Design shows center but bottom heavy
+    justify-content: center;
+
+    // Use flex-end for bottom sheet feel on mobile, or center for modal
+    align-items: center;
+
+    .backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4rpx);
+    }
+
+    .modal-container {
+      position: relative;
+      width: 90%;
+      max-width: 640rpx;
+      max-height: 85vh;
+      background-color: @background-light;
+      border-radius: 24rpx;
+      box-shadow: 0 40rpx 80rpx -12rpx rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modal-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 32rpx 40rpx;
+        border-bottom: 2rpx solid @border-light;
+
+        .modal-title {
+          font-size: 32rpx;
+          font-weight: 600;
+          color: @text-main;
+        }
+
+        .btn-close {
+          width: 64rpx;
+          height: 64rpx;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          color: @text-muted;
+          background-color: #f3f4f6;
+          font-size: 32rpx;
+
+          &:active {
+            background-color: #e5e7eb;
+          }
+        }
+      }
+
+      .modal-body {
+        flex: 1;
+        padding: 40rpx;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 40rpx;
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 12rpx;
+
+          .label {
+            font-size: 24rpx;
+            font-weight: 600;
+            color: @text-muted;
+            text-transform: uppercase;
+            letter-spacing: 1rpx;
+          }
+
+          .input-wrapper {
+            position: relative;
+
+            .input-field,
+            .select-field,
+            .textarea-field {
+              width: 100%;
+              background-color: @surface; // Or slightly darker? Design uses bg-gray-50
+              background-color: #f9fafb;
+              border: 2rpx solid @border-light;
+              border-radius: 16rpx;
+              padding: 24rpx 32rpx;
+              font-size: 28rpx;
+              color: @text-main;
+
+              &:focus {
+                border-color: @primary;
+                background-color: #fff;
+              }
+            }
+
+            .select-field {
+              // appearance: none; // Taro Picker doesn't use select
+            }
+
+            .textarea-field {
+              height: 160rpx;
+            }
+
+            .icon-prefix {
+              position: absolute;
+              left: 32rpx;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 32rpx;
+              color: @text-muted;
+            }
+
+            .icon-suffix {
+              position: absolute;
+              right: 32rpx;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 32rpx;
+              color: @text-muted;
+              pointer-events: none;
+            }
+
+            &.has-prefix .input-field {
+              padding-left: 80rpx;
+            }
+          }
+        }
+      }
+
+      .modal-footer {
+        padding: 32rpx 40rpx;
+        background-color: @surface;
+        border-top: 2rpx solid @border-light;
+        display: flex;
+        gap: 24rpx;
+
+        .btn {
+          flex: 1;
+          height: 88rpx;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 16rpx;
+          font-size: 28rpx;
+          font-weight: 600;
+          transition: all 0.2s;
+
+          &.btn-cancel {
+            border: 2rpx solid @border-light;
+            color: @text-main;
+            background-color: transparent;
+          }
+
+          &.btn-submit {
+            background-color: @primary;
+            color: #fff;
+            box-shadow: 0 4rpx 12rpx fade(@primary, 30%);
+          }
+
+          &:active {
+            transform: scale(0.98);
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes modal-up {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(40rpx);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

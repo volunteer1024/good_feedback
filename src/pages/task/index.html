@@ -1,0 +1,328 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Task Management - Task Bank</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#137fec',
+              'background-light':
+                '#FDFDF8' /* Adjusted to Ivory White as per request context, while keeping the variable name */,
+              'background-dark': '#101922',
+              'notion-text': '#37352F',
+              'notion-gray': '#787774',
+              'notion-border': '#E0E0E0',
+            },
+            fontFamily: {
+              display: ['Inter', 'sans-serif'],
+            },
+            borderRadius: { DEFAULT: '0.25rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+      /* Custom scrollbar for horizontal chips */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-notion-text dark:text-white transition-colors duration-200"
+  >
+    <div
+      class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl shadow-black/5 dark:shadow-none bg-background-light dark:bg-background-dark"
+    >
+      <!-- TopAppBar -->
+      <header
+        class="sticky top-0 z-50 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm p-4 pb-2 justify-between border-b border-transparent"
+      >
+        <button
+          class="text-notion-text dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+        >
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h2
+          class="text-notion-text dark:text-white text-lg font-semibold leading-tight tracking-tight flex-1 text-center"
+        >
+          Task Bank
+        </h2>
+        <button
+          class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 text-primary transition-colors"
+        >
+          <span class="material-symbols-outlined">add</span>
+        </button>
+      </header>
+      <!-- SearchBar -->
+      <div class="px-4 py-4">
+        <div class="relative flex w-full flex-col gap-2">
+          <div
+            class="flex w-full items-center rounded-lg border border-notion-border dark:border-gray-700 bg-white dark:bg-gray-800 h-11 px-3 shadow-sm focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all"
+          >
+            <span class="material-symbols-outlined text-notion-gray dark:text-gray-400 mr-2"
+              >search</span
+            >
+            <input
+              class="flex w-full min-w-0 flex-1 resize-none bg-transparent text-notion-text dark:text-white placeholder:text-notion-gray dark:placeholder:text-gray-500 text-sm font-normal focus:outline-none border-none p-0"
+              placeholder="Search or type 'PY' for Pinyin"
+              value=""
+            />
+            <!-- Shortcut Hint (Visual flair) -->
+            <div
+              class="hidden sm:flex items-center justify-center h-5 px-1.5 rounded border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700"
+            >
+              <span class="text-[10px] font-medium text-gray-400 dark:text-gray-300">⌘K</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Filter Chips -->
+      <div class="flex gap-2 px-4 pb-2 overflow-x-auto no-scrollbar w-full">
+        <button
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-notion-text dark:bg-white px-4 border border-transparent shadow-sm transition-transform active:scale-95"
+        >
+          <p class="text-white dark:text-background-dark text-xs font-medium leading-normal">All</p>
+        </button>
+        <button
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 px-4 border border-notion-border dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active:scale-95"
+        >
+          <p class="text-notion-text dark:text-white text-xs font-medium leading-normal">Pinyin</p>
+        </button>
+        <button
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 px-4 border border-notion-border dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active:scale-95"
+        >
+          <p class="text-notion-text dark:text-white text-xs font-medium leading-normal">Math</p>
+        </button>
+        <button
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 px-4 border border-notion-border dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active:scale-95"
+        >
+          <p class="text-notion-text dark:text-white text-xs font-medium leading-normal">Reading</p>
+        </button>
+        <button
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 px-4 border border-notion-border dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active:scale-95"
+        >
+          <p class="text-notion-text dark:text-white text-xs font-medium leading-normal">
+            Creative
+          </p>
+        </button>
+      </div>
+      <!-- Section Title (Optional but good for structure) -->
+      <div class="px-4 py-3 flex justify-between items-end">
+        <h3
+          class="text-xs font-semibold uppercase tracking-wider text-notion-gray dark:text-gray-400"
+        >
+          Library
+        </h3>
+        <span class="text-xs text-notion-gray dark:text-gray-500">12 Tasks</span>
+      </div>
+      <!-- Task List -->
+      <div class="flex flex-col px-4 gap-3 pb-24">
+        <!-- ListItem 1: Pinyin -->
+        <div
+          class="group flex items-center gap-3 bg-white dark:bg-gray-800 px-3 py-3 rounded-lg border border-notion-border/50 dark:border-gray-700 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-primary/30 transition-all cursor-pointer"
+        >
+          <!-- Icon Box -->
+          <div
+            class="flex items-center justify-center rounded-md bg-orange-50 dark:bg-orange-900/30 shrink-0 size-10 text-orange-600 dark:text-orange-400"
+          >
+            <span class="material-symbols-outlined text-[20px]">menu_book</span>
+          </div>
+          <!-- Content -->
+          <div class="flex flex-col flex-1 min-w-0">
+            <p
+              class="text-notion-text dark:text-gray-100 text-sm font-medium leading-tight line-clamp-1 mb-1 group-hover:text-primary transition-colors"
+            >
+              Pinyin Reading Practice - Module 1
+            </p>
+            <div class="flex items-center gap-2">
+              <span
+                class="inline-flex items-center rounded bg-orange-100/50 dark:bg-orange-900/40 px-1.5 py-0.5 text-[10px] font-medium text-orange-700 dark:text-orange-300 ring-1 ring-inset ring-orange-600/10"
+                >Language</span
+              >
+              <span class="text-[10px] text-notion-gray dark:text-gray-500">• 15 mins</span>
+            </div>
+          </div>
+          <!-- Menu -->
+          <button
+            class="shrink-0 size-8 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-notion-gray dark:text-gray-400 transition-colors"
+          >
+            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+          </button>
+        </div>
+        <!-- ListItem 2: Math -->
+        <div
+          class="group flex items-center gap-3 bg-white dark:bg-gray-800 px-3 py-3 rounded-lg border border-notion-border/50 dark:border-gray-700 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-primary/30 transition-all cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center rounded-md bg-blue-50 dark:bg-blue-900/30 shrink-0 size-10 text-blue-600 dark:text-blue-400"
+          >
+            <span class="material-symbols-outlined text-[20px]">calculate</span>
+          </div>
+          <div class="flex flex-col flex-1 min-w-0">
+            <p
+              class="text-notion-text dark:text-gray-100 text-sm font-medium leading-tight line-clamp-1 mb-1 group-hover:text-primary transition-colors"
+            >
+              Addition/Subtraction within 20
+            </p>
+            <div class="flex items-center gap-2">
+              <span
+                class="inline-flex items-center rounded bg-blue-100/50 dark:bg-blue-900/40 px-1.5 py-0.5 text-[10px] font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10"
+                >Math</span
+              >
+              <span class="text-[10px] text-notion-gray dark:text-gray-500">• 10 mins</span>
+            </div>
+          </div>
+          <button
+            class="shrink-0 size-8 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-notion-gray dark:text-gray-400 transition-colors"
+          >
+            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+          </button>
+        </div>
+        <!-- ListItem 3: Storytelling -->
+        <div
+          class="group flex items-center gap-3 bg-white dark:bg-gray-800 px-3 py-3 rounded-lg border border-notion-border/50 dark:border-gray-700 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-primary/30 transition-all cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center rounded-md bg-purple-50 dark:bg-purple-900/30 shrink-0 size-10 text-purple-600 dark:text-purple-400"
+          >
+            <span class="material-symbols-outlined text-[20px]">auto_stories</span>
+          </div>
+          <div class="flex flex-col flex-1 min-w-0">
+            <p
+              class="text-notion-text dark:text-gray-100 text-sm font-medium leading-tight line-clamp-1 mb-1 group-hover:text-primary transition-colors"
+            >
+              Picture Storytelling: The Park
+            </p>
+            <div class="flex items-center gap-2">
+              <span
+                class="inline-flex items-center rounded bg-purple-100/50 dark:bg-purple-900/40 px-1.5 py-0.5 text-[10px] font-medium text-purple-700 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10"
+                >Creative</span
+              >
+              <span class="text-[10px] text-notion-gray dark:text-gray-500">• 25 mins</span>
+            </div>
+          </div>
+          <button
+            class="shrink-0 size-8 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-notion-gray dark:text-gray-400 transition-colors"
+          >
+            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+          </button>
+        </div>
+        <!-- ListItem 4: Writing -->
+        <div
+          class="group flex items-center gap-3 bg-white dark:bg-gray-800 px-3 py-3 rounded-lg border border-notion-border/50 dark:border-gray-700 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-primary/30 transition-all cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center rounded-md bg-orange-50 dark:bg-orange-900/30 shrink-0 size-10 text-orange-600 dark:text-orange-400"
+          >
+            <span class="material-symbols-outlined text-[20px]">edit_note</span>
+          </div>
+          <div class="flex flex-col flex-1 min-w-0">
+            <p
+              class="text-notion-text dark:text-gray-100 text-sm font-medium leading-tight line-clamp-1 mb-1 group-hover:text-primary transition-colors"
+            >
+              Hanzi Writing Practice - Basics
+            </p>
+            <div class="flex items-center gap-2">
+              <span
+                class="inline-flex items-center rounded bg-orange-100/50 dark:bg-orange-900/40 px-1.5 py-0.5 text-[10px] font-medium text-orange-700 dark:text-orange-300 ring-1 ring-inset ring-orange-600/10"
+                >Language</span
+              >
+              <span class="text-[10px] text-notion-gray dark:text-gray-500">• 20 mins</span>
+            </div>
+          </div>
+          <button
+            class="shrink-0 size-8 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-notion-gray dark:text-gray-400 transition-colors"
+          >
+            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+          </button>
+        </div>
+        <!-- ListItem 5: Listening -->
+        <div
+          class="group flex items-center gap-3 bg-white dark:bg-gray-800 px-3 py-3 rounded-lg border border-notion-border/50 dark:border-gray-700 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-primary/30 transition-all cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center rounded-md bg-teal-50 dark:bg-teal-900/30 shrink-0 size-10 text-teal-600 dark:text-teal-400"
+          >
+            <span class="material-symbols-outlined text-[20px]">headphones</span>
+          </div>
+          <div class="flex flex-col flex-1 min-w-0">
+            <p
+              class="text-notion-text dark:text-gray-100 text-sm font-medium leading-tight line-clamp-1 mb-1 group-hover:text-primary transition-colors"
+            >
+              Daily Conversation Listening
+            </p>
+            <div class="flex items-center gap-2">
+              <span
+                class="inline-flex items-center rounded bg-teal-100/50 dark:bg-teal-900/40 px-1.5 py-0.5 text-[10px] font-medium text-teal-700 dark:text-teal-300 ring-1 ring-inset ring-teal-600/10"
+                >Listening</span
+              >
+              <span class="text-[10px] text-notion-gray dark:text-gray-500">• 12 mins</span>
+            </div>
+          </div>
+          <button
+            class="shrink-0 size-8 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-notion-gray dark:text-gray-400 transition-colors"
+          >
+            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+          </button>
+        </div>
+        <!-- "Create New" prompt at bottom of list -->
+        <div
+          class="mt-4 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl bg-transparent"
+        >
+          <div
+            class="size-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 mb-2"
+          >
+            <span class="material-symbols-outlined">add</span>
+          </div>
+          <p class="text-sm font-medium text-notion-gray dark:text-gray-400">Create a new task</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
