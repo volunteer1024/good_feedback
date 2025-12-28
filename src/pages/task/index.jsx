@@ -1,21 +1,17 @@
-import { Button, Input, Picker, ScrollView, Text, Textarea, View } from '@tarojs/components';
+import { Button, Input, ScrollView, Text, Textarea, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
 import TabBar from '../../components/TabBar';
 import './index.less';
 
 const Task = () => {
-  const [activeFilter, setActiveFilter] = useState('All');
   const [showAddModal, setShowAddModal] = useState(false);
-  const [categories] = useState(['Pinyin', 'Math', 'Reading', 'Creative', 'Listening']);
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1);
 
   // Dummy Data for Tasks
   const tasks = [
     {
       id: 1,
       title: 'Pinyin Reading Practice - Module 1',
-      category: 'Language',
       duration: '15 mins',
       color: 'orange',
       icon: '📖',
@@ -23,7 +19,6 @@ const Task = () => {
     {
       id: 2,
       title: 'Addition/Subtraction within 20',
-      category: 'Math',
       duration: '10 mins',
       color: 'blue',
       icon: '🔢',
@@ -31,7 +26,6 @@ const Task = () => {
     {
       id: 3,
       title: 'Picture Storytelling: The Park',
-      category: 'Creative',
       duration: '25 mins',
       color: 'purple',
       icon: '📚',
@@ -39,7 +33,6 @@ const Task = () => {
     {
       id: 4,
       title: 'Hanzi Writing Practice - Basics',
-      category: 'Language',
       duration: '20 mins',
       color: 'orange',
       icon: '✏️',
@@ -47,7 +40,6 @@ const Task = () => {
     {
       id: 5,
       title: 'Daily Conversation Listening',
-      category: 'Listening',
       duration: '12 mins',
       color: 'teal',
       icon: '🎧',
@@ -62,10 +54,7 @@ const Task = () => {
       <View className="card-content">
         <Text className="task-name">{task.title}</Text>
         <View className="meta-row">
-          <View className={`tag ${task.color}`}>
-            <Text>{task.category}</Text>
-          </View>
-          <Text className="duration">• {task.duration}</Text>
+          <Text className="duration">{task.duration}</Text>
         </View>
       </View>
       <View className="btn-more">
@@ -100,19 +89,6 @@ const Task = () => {
             <Text>⌘K</Text>
           </View>
         </View>
-      </View>
-
-      {/* Filter Chips */}
-      <View className="filter-section">
-        {['All', 'Pinyin', 'Math', 'Reading', 'Creative'].map((filter) => (
-          <View
-            key={filter}
-            className={`filter-chip ${activeFilter === filter ? 'active' : 'inactive'}`}
-            onClick={() => setActiveFilter(filter)}
-          >
-            <Text>{filter}</Text>
-          </View>
-        ))}
       </View>
 
       {/* Main List */}
@@ -151,33 +127,6 @@ const Task = () => {
                 <Text className="label">Task Name</Text>
                 <View className="input-wrapper">
                   <Input className="input-field" placeholder="e.g. Daily Pinyin Practice" />
-                </View>
-              </View>
-
-              <View className="form-group">
-                <Text className="label">Category</Text>
-                <View className="input-wrapper">
-                  <Picker
-                    mode="selector"
-                    range={categories}
-                    onChange={(e) => setSelectedCategoryIndex(e.detail.value)}
-                  >
-                    <View
-                      className="input-field select-field"
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <Text style={{ color: selectedCategoryIndex === -1 ? '#9ca3af' : 'inherit' }}>
-                        {selectedCategoryIndex === -1
-                          ? 'Select a category'
-                          : categories[selectedCategoryIndex]}
-                      </Text>
-                    </View>
-                  </Picker>
-                  <Text className="icon-suffix">⌄</Text>
                 </View>
               </View>
 

@@ -103,6 +103,22 @@ const Students = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleChooseAvatar = async () => {
+    try {
+      const res = await Taro.chooseMedia({
+        count: 1,
+        mediaType: ['image'],
+        sourceType: ['album', 'camera'],
+        camera: 'back',
+      });
+
+      const tempFilePath = res.tempFiles[0].tempFilePath;
+      setFormData((prev) => ({ ...prev, avatar: tempFilePath }));
+    } catch (err) {
+      console.log('Choose avatar cancelled or failed', err);
+    }
+  };
+
   const handleSubmit = () => {
     if (!formData.name) {
       Taro.showToast({ title: 'Name is required', icon: 'none' });
@@ -250,7 +266,7 @@ const Students = () => {
 
             <ScrollView className="modal-content" scrollY>
               <View className="avatar-upload">
-                <View className="avatar-box">
+                <View className="avatar-box" onClick={handleChooseAvatar}>
                   {formData.avatar ? (
                     <Image src={formData.avatar} className="avatar-img" mode="aspectFill" />
                   ) : formData.name ? (

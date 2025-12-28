@@ -102,51 +102,6 @@
     }
   }
 
-  .filter-section {
-    padding: 0 32rpx 16rpx;
-    display: flex;
-    white-space: nowrap;
-    overflow-x: auto;
-
-    // Hide scrollbar
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    .filter-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 64rpx;
-      padding: 0 32rpx;
-      border-radius: 32rpx;
-      font-size: 24rpx;
-      font-weight: 500;
-      margin-right: 16rpx;
-      transition: all 0.2s;
-      border: 2rpx solid transparent;
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      &.active {
-        background-color: @text-main;
-        color: @background-light;
-      }
-
-      &.inactive {
-        background-color: @surface;
-        border-color: @border-light;
-        color: @text-main;
-
-        &:active {
-          background-color: #f9fafb;
-        }
-      }
-    }
-  }
-
   .library-header {
     padding: 24rpx 32rpx;
     display: flex;
@@ -244,35 +199,6 @@
           display: flex;
           align-items: center;
           gap: 16rpx;
-
-          .tag {
-            padding: 2rpx 12rpx;
-            border-radius: 6rpx;
-            font-size: 20rpx;
-            font-weight: 500;
-            border: 1rpx solid transparent;
-
-            &.orange {
-              background-color: #fff7ed;
-              color: #c2410c;
-              border-color: fade(#ea580c, 10%);
-            }
-            &.blue {
-              background-color: #eff6ff;
-              color: #1d4ed8;
-              border-color: fade(#2563eb, 10%);
-            }
-            &.purple {
-              background-color: #faf5ff;
-              color: #7e22ce;
-              border-color: fade(#9333ea, 10%);
-            }
-            &.teal {
-              background-color: #f0fdfa;
-              color: #0f766e;
-              border-color: fade(#0d9488, 10%);
-            }
-          }
 
           .duration {
             font-size: 20rpx;
