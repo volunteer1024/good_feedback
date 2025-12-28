@@ -12,7 +12,7 @@ const IconCalendar = () => (
   <Text style={{ fontSize: '28rpx', marginRight: '8rpx' }}>📅</Text>
 )
 
-const Index = () => {
+const Attendance = () => {
   const [students, setStudents] = useState([
     { id: 1, name: 'Alice M.', timeLeft: 10, avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop', selected: true },
     { id: 2, name: 'Bob D.', timeLeft: 8, avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop', selected: false },
@@ -95,7 +95,7 @@ const Index = () => {
         </View>
 
         <View className='add-student-btn'>
-          <Text style={{ marginRight: '10rpx' }}>+</Text>
+          <Text>+</Text>
           <Text>Add Student to Class</Text>
         </View>
       </ScrollView>
@@ -130,4 +130,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default Attendance
