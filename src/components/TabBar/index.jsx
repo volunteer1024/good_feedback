@@ -1,27 +1,39 @@
-import { Text, View } from '@tarojs/components'
-import './index.less'
+import { Text, View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import './index.less';
 
 const TabBar = ({ activeTab = 'home' }) => {
   const tabs = [
-    { id: 'home', icon: '⌂', label: 'Home' },
-    { id: 'students', icon: '👥', label: 'Students' },
-    { id: 'feedback', icon: '💬', label: 'Feedback' },
-    { id: 'settings', icon: '⚙', label: 'Settings' }
-  ]
+    { id: 'home', icon: 'home', label: 'Home', path: '/pages/index/index' },
+    { id: 'students', icon: 'group', label: 'Students', path: '/pages/students/index' },
+    { id: 'feedback', icon: 'chat', label: 'Feedback', path: '/pages/index/index' },
+    { id: 'settings', icon: 'settings', label: 'Settings', path: '/pages/index/index' },
+  ];
+
+  const handleTabClick = (tab) => {
+    if (tab.id === activeTab) return;
+    Taro.reLaunch({ url: tab.path });
+  };
 
   return (
-    <View className='nav-bar'>
-      {tabs.map(tab => (
-        <View 
-          key={tab.id} 
+    <View className="nav-bar">
+      {tabs.map((tab) => (
+        <View
+          key={tab.id}
           className={`nav-item ${activeTab === tab.id ? 'active' : ''}`}
+          onClick={() => handleTabClick(tab)}
         >
-          <View style={{ fontSize: '40rpx' }}>{tab.icon}</View>
-          <Text className='nav-label'>{tab.label}</Text>
+          <Text
+            className={`material-symbols-outlined ${activeTab === tab.id ? 'filled' : ''}`}
+            style={{ fontSize: '48rpx' }}
+          >
+            {tab.icon}
+          </Text>
+          <Text className="nav-label">{tab.label}</Text>
         </View>
       ))}
     </View>
-  )
-}
+  );
+};
 
-export default TabBar
+export default TabBar;
