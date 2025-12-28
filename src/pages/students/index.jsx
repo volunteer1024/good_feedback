@@ -178,35 +178,37 @@ const Students = () => {
               className={`student-card ${student.status === 'Graduated' ? 'is-graduated' : ''}`}
               onClick={() => handleEditStudent(student)}
             >
-              <View className="card-left">
-                {student.avatar ? (
-                  <Image className="avatar" src={student.avatar} mode="aspectFill" />
-                ) : (
-                  <View
-                    className="initial-avatar"
-                    style={{ backgroundColor: getMorandiColor(student.name) }}
-                  >
-                    {student.name.charAt(student.name.length - 1).toUpperCase()}
-                  </View>
-                )}
+              <View className="card-top">
+                <View className="card-left">
+                  {student.avatar ? (
+                    <Image className="avatar" src={student.avatar} mode="aspectFill" />
+                  ) : (
+                    <View
+                      className="initial-avatar"
+                      style={{ backgroundColor: getMorandiColor(student.name) }}
+                    >
+                      {student.name.charAt(student.name.length - 1).toUpperCase()}
+                    </View>
+                  )}
 
-                <View className="student-info">
-                  <Text className="name">{student.name}</Text>
-                  <View className="meta">
-                    <Text className={`status-badge ${getStatusClass(student.status)}`}>
-                      {student.status}
-                    </Text>
-                    <Text className="student-id">ID: #{student.id}</Text>
+                  <View className="student-info">
+                    <Text className="name">{student.name}</Text>
+                    <View className="meta">
+                      <Text className={`status-badge ${getStatusClass(student.status)}`}>
+                        {student.status}
+                      </Text>
+                      <Text className="student-id">ID: #{student.id}</Text>
+                    </View>
                   </View>
                 </View>
+                <Text style={{ color: '#ccc', fontSize: '40rpx' }}>›</Text>
               </View>
 
-              <View className="card-right">
-                <View className="remaining">
+              <View className="card-bottom">
+                <View>
                   <Text className="hours">{student.remainingHours} hrs</Text>
-                  <Text className="label">Remaining</Text>
                 </View>
-                <Text style={{ color: '#ccc', marginLeft: '16rpx' }}>›</Text>
+                <Text className="label">Remaining</Text>
               </View>
             </View>
           ))
