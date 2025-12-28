@@ -1,11 +1,4 @@
-@primary: #282828;
-@background-light: #FBFBF9;
-@surface: #FFFFFF;
-@border-light: #E6E6E3;
-@text-main: #37352F;
-@text-muted: #989693;
-@warning: #E06C4C;
-@accent-bg: #F0F0EE;
+@import "../../styles/variables.less";
 
 .attendance-page {
     min-height: 100vh;
@@ -232,38 +225,6 @@
                 border-radius: 8rpx;
                 font-size: 20rpx;
                 font-weight: 700;
-            }
-        }
-    }
-
-    .nav-bar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 120rpx;
-        background-color: @surface;
-        border-top: 1px solid @border-light;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding-bottom: env(safe-area-inset-bottom);
-        z-index: 20;
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4rpx;
-            color: #999;
-
-            &.active {
-                color: @primary;
-            }
-
-            .nav-label {
-                font-size: 20rpx;
-                font-weight: 600;
             }
         }
     }

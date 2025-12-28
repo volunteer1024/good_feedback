@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { Image, ScrollView, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { View, Text, Image, ScrollView } from '@tarojs/components'
+import { useState } from 'react'
+import TabBar from '../../components/TabBar'
 import './index.less'
 
 // Simple icons using characters or CSS
@@ -51,7 +52,7 @@ const Attendance = () => {
       <View className='header'>
         <View className='header-top'>
           <View className='title-group'>
-            <Text className='title'>Today's Class</Text>
+            <Text className='title'>Today&apos;s Class</Text>
             <View className='subtitle'>
               <IconCalendar />
               <Text>Oct 24, 2023</Text>
@@ -108,24 +109,7 @@ const Attendance = () => {
         </View>
       </View>
 
-      <View className='nav-bar'>
-        <View className='nav-item active'>
-          <View style={{ fontSize: '40rpx' }}>⌂</View>
-          <Text className='nav-label'>Home</Text>
-        </View>
-        <View className='nav-item'>
-          <View style={{ fontSize: '40rpx' }}>👥</View>
-          <Text className='nav-label'>Students</Text>
-        </View>
-        <View className='nav-item'>
-          <View style={{ fontSize: '40rpx' }}>💬</View>
-          <Text className='nav-label'>Feedback</Text>
-        </View>
-        <View className='nav-item'>
-          <View style={{ fontSize: '40rpx' }}>⚙</View>
-          <Text className='nav-label'>Settings</Text>
-        </View>
-      </View>
+      <TabBar activeTab='home' />
     </View>
   )
 }

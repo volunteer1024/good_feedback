@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Student Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#202020',
+              'primary-hover': '#000000',
+              'background-light': '#FBFBF9',
+              'background-dark': '#191919',
+              'surface-dark': '#202020',
+              'surface-light': '#FFFFFF',
+              'border-color': '#E5E5E5',
+              'text-main': '#37352f',
+              'text-muted': '#787774',
+            },
+            fontFamily: {
+              display: ['Inter', 'sans-serif'],
+              sans: ['Inter', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '0.375rem',
+              lg: '0.5rem',
+              xl: '0.75rem',
+              '2xl': '1rem',
+            },
+            boxShadow: {
+              minimal: '0 1px 2px 0 rgba(0, 0, 0, 0.02)',
+              modal: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+      .material-symbols-outlined.filled {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body class="bg-background-light font-sans text-text-main antialiased selection:bg-gray-200">
+    <div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden">
+      <div
+        class="sticky top-0 z-10 bg-background-light/95 backdrop-blur-sm p-4 pb-2 border-b border-border-color"
+      >
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-semibold tracking-tight text-primary flex-1">
+            Student Management
+          </h2>
+          <div class="flex items-center justify-end gap-3">
+            <button
+              class="flex items-center justify-center rounded-lg size-10 bg-white border border-border-color hover:bg-gray-50 text-text-main transition-all active:scale-95"
+            >
+              <span class="material-symbols-outlined text-[22px]">notifications</span>
+            </button>
+            <button
+              class="flex items-center justify-center rounded-lg size-10 bg-primary text-white hover:bg-primary-hover transition-all shadow-sm active:scale-95"
+            >
+              <span class="material-symbols-outlined text-[22px]">add</span>
+            </button>
+          </div>
+        </div>
+        <label class="flex flex-col w-full h-11">
+          <div
+            class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white shadow-minimal border border-border-color focus-within:border-gray-400 focus-within:ring-1 focus-within:ring-gray-400 transition-all"
+          >
+            <div class="text-gray-400 flex items-center justify-center pl-3 pr-2">
+              <span class="material-symbols-outlined text-[20px]">search</span>
+            </div>
+            <input
+              class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-text-main placeholder:text-gray-400 focus:outline-0 border-none h-full px-0 text-[15px] font-normal"
+              placeholder="Search by name..."
+            />
+          </div>
+        </label>
+      </div>
+      <div class="px-4 py-3 overflow-x-auto no-scrollbar">
+        <div class="flex gap-2 min-w-max">
+          <button
+            class="flex h-8 items-center justify-center px-4 rounded-md bg-primary text-white font-medium text-sm transition-all shadow-sm"
+          >
+            All
+          </button>
+          <button
+            class="flex h-8 items-center justify-center px-4 rounded-md bg-white border border-border-color text-text-muted font-medium text-sm hover:text-text-main hover:bg-gray-50 transition-colors"
+          >
+            In Class
+          </button>
+          <button
+            class="flex h-8 items-center justify-center px-4 rounded-md bg-white border border-border-color text-text-muted font-medium text-sm hover:text-text-main hover:bg-gray-50 transition-colors"
+          >
+            Paused
+          </button>
+          <button
+            class="flex h-8 items-center justify-center px-4 rounded-md bg-white border border-border-color text-text-muted font-medium text-sm hover:text-text-main hover:bg-gray-50 transition-colors"
+          >
+            Graduated
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 flex flex-col gap-3 px-4 py-1 pb-24">
+        <div
+          class="group flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-lg border border-border-color hover:border-gray-300 transition-all cursor-pointer"
+        >
+          <div class="flex items-center gap-4 flex-1">
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12 shrink-0 border border-gray-100"
+              data-alt="Portrait of Alex Johnson student"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCriGlcScux0AWlecnFDErXN0CLtNQtYXZOZVc-0eMz5gPuJgNjRlFuN7pkpT_VUzLaWESTFWSP5eepMlC8cg8d80aJbi80uGxx9mvU07ZqBm8XesCsDBZ34oilRdjoXdw7k3A7iNjRkHDOpG8ECHN3oBwfO7WnZansJhLhO_RJiN8nlo8nSB7TyZoK6QF6KOcjifKyW_BetSFs3BLrkTnuHI90eRIDDhYtMv__cK_pzEOdVEWhLNsQtzJCnLduSGPpx-TgO4_Ftg');
+              "
+            ></div>
+            <div class="flex flex-col justify-center min-w-0">
+              <p class="text-text-main text-[15px] font-semibold leading-tight truncate">
+                Alex Johnson
+              </p>
+              <div class="flex items-center gap-2 mt-1">
+                <span
+                  class="inline-flex items-center rounded px-1.5 py-0.5 text-xs font-medium bg-green-50 text-green-700 border border-green-200/60"
+                  >In Class</span
+                >
+                <span class="text-text-muted text-xs font-mono tracking-tight">ID: #8821</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between sm:justify-end gap-4 pl-[64px] sm:pl-0">
+            <div class="flex flex-col items-start sm:items-end">
+              <p class="text-primary font-semibold text-base leading-tight">45 hrs</p>
+              <p class="text-text-muted text-[11px] font-medium uppercase tracking-wide">
+                Remaining
+              </p>
+            </div>
+            <div class="text-gray-300 group-hover:text-text-main transition-colors">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="group flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-lg border border-border-color hover:border-gray-300 transition-all cursor-pointer"
+        >
+          <div class="flex items-center gap-4 flex-1">
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12 shrink-0 border border-gray-100"
+              data-alt="Portrait of Sarah Lee student"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOcqA7JJcHpZ8k2zB9zbrrnW3MSAX6ciL51FoGv6trlB3LC01VEKVlqFVkERaMxkH-G2LlG-dYg_EH5gI4AxuSeDMf2XogEu4o_OI-tk-sjzK6wG4L3znoY_nt5-hwqxXXXdXjBN9xOy9iI-uhuszo3-5jTBs6HN0b4-ZZbFU6KEWgTb3N-KW8iDJbxp9M9T7bNlBtJfUOQer-skr5584IHAXPq2PdsaYS3FmPX0CKWtlz6NfWORhoArQVr7OwBoDIqgonThaATw');
+              "
+            ></div>
+            <div class="flex flex-col justify-center min-w-0">
+              <p class="text-text-main text-[15px] font-semibold leading-tight truncate">
+                Sarah Lee
+              </p>
+              <div class="flex items-center gap-2 mt-1">
+                <span
+                  class="inline-flex items-center rounded px-1.5 py-0.5 text-xs font-medium bg-orange-50 text-orange-700 border border-orange-200/60"
+                  >Paused</span
+                >
+                <span class="text-text-muted text-xs font-mono tracking-tight">ID: #9932</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between sm:justify-end gap-4 pl-[64px] sm:pl-0">
+            <div class="flex flex-col items-start sm:items-end">
+              <p class="text-text-main font-semibold text-base leading-tight">12 hrs</p>
+              <p class="text-text-muted text-[11px] font-medium uppercase tracking-wide">
+                Remaining
+              </p>
+            </div>
+            <div class="text-gray-300 group-hover:text-text-main transition-colors">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="group flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-lg border border-border-color hover:border-gray-300 transition-all cursor-pointer"
+        >
+          <div class="flex items-center gap-4 flex-1">
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12 shrink-0 border border-gray-100"
+              data-alt="Portrait of Michael Chen student"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRxuRfCQF_oUz7Q9Qq8qZSL1doRdrfpymqwwvf3iYyey4GwotPTmrj3OMsCRyziOGkWGsw4vBp_t5UP7jFUkOlVCsnunM0w5qpz-ZLXwEqnRtXKuKxCb-3BByf-_K2fHQW8yVRosdoq6kImnXebq1Q7-O030SOmiH_3UQjDVCNbLZs-Doc-goeO_05yCaPkCjEyfoTJ8gOrgCjPBWLVZcJCgEN-J8-QycYFtQZ5pQYgx5aMDScKvAiNCYD9YiBd1wZB14Lx_tBkg');
+              "
+            ></div>
+            <div class="flex flex-col justify-center min-w-0">
+              <p class="text-text-main text-[15px] font-semibold leading-tight truncate">
+                Michael Chen
+              </p>
+              <div class="flex items-center gap-2 mt-1">
+                <span
+                  class="inline-flex items-center rounded px-1.5 py-0.5 text-xs font-medium bg-green-50 text-green-700 border border-green-200/60"
+                  >In Class</span
+                >
+                <span class="text-text-muted text-xs font-mono tracking-tight">ID: #7741</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between sm:justify-end gap-4 pl-[64px] sm:pl-0">
+            <div class="flex flex-col items-start sm:items-end">
+              <p class="text-primary font-semibold text-base leading-tight">120 hrs</p>
+              <p class="text-text-muted text-[11px] font-medium uppercase tracking-wide">
+                Remaining
+              </p>
+            </div>
+            <div class="text-gray-300 group-hover:text-text-main transition-colors">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="group flex flex-col sm:flex-row gap-4 bg-gray-50/50 p-4 rounded-lg border border-border-color hover:border-gray-300 transition-all cursor-pointer"
+        >
+          <div class="flex items-center gap-4 flex-1 opacity-75 grayscale-[1]">
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12 shrink-0 border border-gray-100"
+              data-alt="Portrait of Emily Davis student"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjddw6EPL-bk0GUEu_LY6wOGEwKcUqZEt-hdrFnVdD8jJ-CO6aUVPBG0zPg2L8N-msdDXE8IRSYRig34M8d9vbHm0lbvZQulynn3BqZCH4AdalnzRptXguXbCo6U4CHkTUIXeuiZltZzKKxyPXnj7ntEvNxS_yxNslThs5_uZQJ7emVFbnqfMxuxGs013dq3IbjWZFx5KkToJxFUsbzzdrNYb37HnrL9dE0ovc9cLfp3mkCLjFXvIXjQQl3Z8zWLWZ-PwHcOlnRQ');
+              "
+            ></div>
+            <div class="flex flex-col justify-center min-w-0">
+              <p class="text-text-main text-[15px] font-semibold leading-tight truncate">
+                Emily Davis
+              </p>
+              <div class="flex items-center gap-2 mt-1">
+                <span
+                  class="inline-flex items-center rounded px-1.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                  >Graduated</span
+                >
+                <span class="text-text-muted text-xs font-mono tracking-tight">ID: #5512</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-between sm:justify-end gap-4 pl-[64px] sm:pl-0 opacity-75"
+          >
+            <div class="flex flex-col items-start sm:items-end">
+              <p class="text-gray-400 font-semibold text-base leading-tight">0 hrs</p>
+              <p class="text-text-muted text-[11px] font-medium uppercase tracking-wide">
+                Remaining
+              </p>
+            </div>
+            <div class="text-gray-300 group-hover:text-text-main transition-colors">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="group flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-lg border border-border-color hover:border-gray-300 transition-all cursor-pointer"
+        >
+          <div class="flex items-center gap-4 flex-1">
+            <div
+              class="flex items-center justify-center rounded-full h-12 w-12 shrink-0 bg-gray-100 text-text-main border border-gray-100"
+            >
+              <span class="text-sm font-bold">JR</span>
+            </div>
+            <div class="flex flex-col justify-center min-w-0">
+              <p class="text-text-main text-[15px] font-semibold leading-tight truncate">
+                James Rodriguez
+              </p>
+              <div class="flex items-center gap-2 mt-1">
+                <span
+                  class="inline-flex items-center rounded px-1.5 py-0.5 text-xs font-medium bg-green-50 text-green-700 border border-green-200/60"
+                  >In Class</span
+                >
+                <span class="text-text-muted text-xs font-mono tracking-tight">ID: #1029</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between sm:justify-end gap-4 pl-[64px] sm:pl-0">
+            <div class="flex flex-col items-start sm:items-end">
+              <p class="text-primary font-semibold text-base leading-tight">15 hrs</p>
+              <p class="text-text-muted text-[11px] font-medium uppercase tracking-wide">
+                Remaining
+              </p>
+            </div>
+            <div class="text-gray-300 group-hover:text-text-main transition-colors">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="fixed bottom-0 w-full bg-white/95 backdrop-blur-md border-t border-border-color pb-safe z-40"
+      >
+        <div class="flex justify-around items-center h-[60px]">
+          <button
+            class="flex flex-col items-center justify-center w-full h-full space-y-1 text-gray-400 hover:text-primary transition-colors"
+          >
+            <span class="material-symbols-outlined text-[24px]">home</span>
+            <span class="text-[10px] font-medium">Home</span>
+          </button>
+          <button
+            class="flex flex-col items-center justify-center w-full h-full space-y-1 text-primary"
+          >
+            <span class="material-symbols-outlined filled text-[24px]">group</span>
+            <span class="text-[10px] font-semibold">Students</span>
+          </button>
+          <button
+            class="flex flex-col items-center justify-center w-full h-full space-y-1 text-gray-400 hover:text-primary transition-colors"
+          >
+            <span class="material-symbols-outlined text-[24px]">chat</span>
+            <span class="text-[10px] font-medium">Feedback</span>
+          </button>
+          <button
+            class="flex flex-col items-center justify-center w-full h-full space-y-1 text-gray-400 hover:text-primary transition-colors"
+          >
+            <span class="material-symbols-outlined text-[24px]">settings</span>
+            <span class="text-[10px] font-medium">Settings</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-primary/20 backdrop-blur-sm transition-opacity"></div>
+      <div
+        class="relative w-full max-w-lg transform flex flex-col max-h-[90vh] overflow-hidden rounded-xl bg-background-light shadow-modal transition-all border border-white/50 ring-1 ring-black/5"
+      >
+        <div
+          class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white/50 backdrop-blur-xl"
+        >
+          <h3 class="text-lg font-semibold text-text-main tracking-tight">New Student</h3>
+          <button
+            class="text-text-muted hover:text-text-main transition-colors rounded-full p-1 hover:bg-gray-100"
+          >
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 scroll-smooth no-scrollbar">
+          <form class="space-y-5">
+            <div class="flex flex-col items-center justify-center mb-6">
+              <div
+                class="group relative h-24 w-24 overflow-hidden rounded-full bg-white shadow-sm ring-1 ring-gray-200 hover:ring-gray-300 transition-all cursor-pointer flex items-center justify-center"
+              >
+                <div
+                  class="absolute inset-0 flex items-center justify-center bg-gray-50 group-hover:bg-gray-100 transition-colors"
+                >
+                  <span class="material-symbols-outlined text-gray-400 text-3xl">add_a_photo</span>
+                </div>
+              </div>
+              <div class="mt-2 text-center">
+                <p class="text-xs font-medium text-primary">Upload Avatar</p>
+                <p class="text-[10px] text-text-muted">Auto-generated if empty</p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label
+                  class="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5 ml-0.5"
+                  >Full Name</label
+                >
+                <input
+                  class="block w-full rounded-lg border-gray-200 bg-white px-3 py-2.5 text-sm text-text-main placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 shadow-sm transition-all"
+                  placeholder="e.g. Alice Johnson"
+                  type="text"
+                />
+              </div>
+              <div>
+                <div class="flex justify-between items-baseline mb-1.5 ml-0.5">
+                  <label
+                    class="block text-xs font-semibold text-text-muted uppercase tracking-wider"
+                    >Nickname</label
+                  >
+                  <span class="text-[10px] text-gray-400 font-medium">For feedback images</span>
+                </div>
+                <input
+                  class="block w-full rounded-lg border-gray-200 bg-white px-3 py-2.5 text-sm text-text-main placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 shadow-sm transition-all"
+                  placeholder="e.g. Alice"
+                  type="text"
+                />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5 ml-0.5"
+                    >Gender</label
+                  >
+                  <select
+                    class="block w-full rounded-lg border-gray-200 bg-white px-3 py-2.5 text-sm text-text-main focus:border-gray-400 focus:ring-0 shadow-sm transition-all"
+                  >
+                    <option>Select</option>
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5 ml-0.5"
+                    >Birthday</label
+                  >
+                  <input
+                    class="block w-full rounded-lg border-gray-200 bg-white px-3 py-2.5 text-sm text-text-main focus:border-gray-400 focus:ring-0 shadow-sm transition-all text-gray-500"
+                    type="date"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="h-px bg-gray-100 my-2"></div>
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5 ml-0.5"
+                    >Remaining Hours</label
+                  >
+                  <div class="relative">
+                    <input
+                      class="block w-full rounded-lg border-gray-200 bg-white pl-3 pr-8 py-2.5 text-sm text-text-main placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 shadow-sm transition-all"
+                      placeholder="0"
+                      type="number"
+                    />
+                    <span class="absolute right-3 top-2.5 text-xs text-gray-400 font-medium"
+                      >Hrs</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5 ml-0.5"
+                    >Fee Standard</label
+                  >
+                  <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-sm text-gray-400 font-medium">$</span>
+                    <input
+                      class="block w-full rounded-lg border-gray-200 bg-white pl-7 pr-3 py-2.5 text-sm text-text-main placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 shadow-sm transition-all"
+                      placeholder="0.00"
+                      type="number"
+                    />
+                    <span
+                      class="absolute right-3 top-2.5 text-[10px] text-gray-400 font-medium uppercase"
+                      >/ Sess</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label
+                  class="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5 ml-0.5"
+                  >Remarks</label
+                >
+                <textarea
+                  class="block w-full rounded-lg border-gray-200 bg-white px-3 py-2.5 text-sm text-text-main placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 shadow-sm transition-all resize-none"
+                  placeholder="Additional notes about the student..."
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="px-6 py-4 border-t border-gray-100 bg-white/50 backdrop-blur-xl flex gap-3">
+          <button
+            class="flex-1 py-2.5 px-4 bg-white border border-gray-200 text-text-main rounded-lg text-sm font-medium hover:bg-gray-50 active:scale-[0.98] transition-all shadow-sm"
+          >
+            Cancel
+          </button>
+          <button
+            class="flex-1 py-2.5 px-4 bg-primary text-white border border-transparent rounded-lg text-sm font-medium hover:bg-primary-hover active:scale-[0.98] transition-all shadow-sm"
+          >
+            Add Student
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
