@@ -85,6 +85,7 @@
 
       .input {
         flex: 1;
+        height: 100%; // iOS fix
         font-size: 28rpx;
         color: @color-text;
       }
@@ -422,7 +423,7 @@
             background: #f9fafb;
             border: 2rpx solid @color-border;
             border-radius: 16rpx;
-            padding: 24rpx 32rpx;
+            // 区分 Input 和 Textarea，Input 使用定高居中以修复 iOS 问题
             font-size: 28rpx;
             color: @color-text;
             box-sizing: border-box;
@@ -431,6 +432,16 @@
               border-color: @color-primary;
               background: #fff;
             }
+          }
+
+          .input-field {
+            height: 96rpx;
+            line-height: 96rpx;
+            padding: 0 32rpx;
+          }
+
+          .textarea-field {
+            padding: 24rpx 32rpx;
           }
           .textarea-field.small {
             height: 160rpx;
@@ -498,11 +509,15 @@
               gap: 16rpx;
 
               .custom-input {
+                width: 100%;
                 background: #fff;
                 border: 2rpx solid #e5e7eb;
                 border-radius: 8rpx;
-                padding: 12rpx 20rpx;
+                height: 64rpx; // iOS fix
+                padding: 0 20rpx; // Remove vertical padding
+                line-height: 64rpx;
                 font-size: 26rpx;
+                box-sizing: border-box;
               }
 
               .custom-actions {

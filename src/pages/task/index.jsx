@@ -236,6 +236,7 @@ const Task = () => {
         <View className="search-box">
           <Text className="icon">🔍</Text>
           <Input
+            always-embed
             className="input"
             placeholder="输入拼音缩写快速查找 (Enter Pinyin)"
             placeholderStyle="color: #9ca3af"
@@ -301,6 +302,7 @@ const Task = () => {
               <View className="form-item">
                 <Text className="label">TASK NAME</Text>
                 <Input
+                  always-embed
                   className="input-field"
                   placeholder="e.g. Daily Pinyin Practice"
                   value={formData.title}
@@ -333,6 +335,7 @@ const Task = () => {
                   {/* Custom Status Input */}
                   <View className="custom-status">
                     <Input
+                      always-embed
                       className="custom-input"
                       placeholder="Enter custom status..."
                       value={customStatus}
