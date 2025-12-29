@@ -1,7 +1,8 @@
 import { Button, Image, Input, ScrollView, Slider, Text, View } from '@tarojs/components';
-import Taro, { useDidShow, useRouter } from '@tarojs/taro';
-import { useMemo, useState } from 'react';
+import Taro, { useDidShow } from '@tarojs/taro';
+import { useEffect, useMemo, useState } from 'react';
 import TabBar from '../../components/TabBar';
+import { attendanceService } from '../../services/attendance';
 import { studentService } from '../../services/student';
 import './index.less';
 
@@ -66,13 +67,25 @@ const TRACKING_TYPE_CONFIG = {
 };
 
 const Feedback = () => {
-  const router = useRouter();
+  // const router = useRouter();
+
+  // 获取状态栏高度用于适配刘海屏
+  const [statusBarHeight, setStatusBarHeight] = useState(20);
+
+  useEffect(() => {
+    try {
+      const info = Taro.getSystemInfoSync();
+      setStatusBarHeight(info.statusBarHeight);
+    } catch (e) {
+      console.error('Get system info failed', e);
+    }
+  }, []);
 
   // 从真实数据加载学生
   const [students, setStudents] = useState([]);
   const [currentStudentId, setCurrentStudentId] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showHistoryHint, setShowHistoryHint] = useState(true);
+  const [showHistoryHint] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
   // 加载学生数据
@@ -81,26 +94,26 @@ const Feedback = () => {
   });
 
   const loadStudents = () => {
-    // 从 URL 参数获取学生 ID 列表
-    const { studentIds } = router.params;
+    // 从 attendanceService 获取今日考勤的学生
+    const attendanceStudents = attendanceService.getTodayAttendanceStudents();
 
-    // 获取所有学生数据
-    const allStudents = studentService.getStudents();
+    // 如果没有考勤记录，尝试从 URL 参数作为fallback（兼容直接访问或测试）
+    // 或者直接提示用户返回首页
+    let targetStudents = attendanceStudents;
 
-    let targetStudents = [];
-    if (studentIds) {
-      // 如果有传入学生 ID，只加载这些学生
-      const ids = studentIds.split(',').map((id) => parseInt(id));
-      targetStudents = allStudents.filter((s) => ids.includes(s.id));
-    } else {
-      // 否则加载所有 In Class 的学生
+    if (targetStudents.length === 0) {
+      // 兼容逻辑：如果没有考勤记录，加载所有In Class学生（可选，或者是直接为空）
+      // 这里为了体验流畅，如果也没有URL参数，就显示空或者全部
+      // 暂时保持原本的备选逻辑：如果没有考勤，加载所有 In Class
+      const allStudents = studentService.getStudents();
       targetStudents = allStudents.filter((s) => s.status === 'In Class');
     }
 
     // 为每个学生添加 feedbackDone 状态
+    // TODO: feedbackDone 状态也应该持久化，目前暂存在内存中
     const studentsWithStatus = targetStudents.map((s) => ({
       ...s,
-      feedbackDone: false,
+      feedbackDone: false, // 实际应该检查是否已完成反馈
     }));
 
     setStudents(studentsWithStatus);
@@ -158,7 +171,7 @@ const Feedback = () => {
     });
   }, [students]);
 
-  const currentStudent = students.find((s) => s.id === currentStudentId);
+  // const currentStudent = students.find((s) => s.id === currentStudentId);
   const currentTasks = studentTasks[currentStudentId] || [];
 
   // 过滤作业库
@@ -205,7 +218,7 @@ const Feedback = () => {
       const task = taskBank.find((t) => t.id === taskId);
       return {
         id: Date.now() + taskId,
-        taskId: taskId,
+        taskId,
         name: task.name,
         trackingType: 'completed',
         value: null,
@@ -298,7 +311,7 @@ const Feedback = () => {
                   type="number"
                   value={task.startPage?.toString() || ''}
                   onInput={(e) =>
-                    handleTaskValueChange(index, 'startPage', parseInt(e.detail.value) || '')
+                    handleTaskValueChange(index, 'startPage', parseInt(e.detail.value, 10) || '')
                   }
                   placeholder="--"
                 />
@@ -311,7 +324,7 @@ const Feedback = () => {
                   type="number"
                   value={task.endPage?.toString() || ''}
                   onInput={(e) =>
-                    handleTaskValueChange(index, 'endPage', parseInt(e.detail.value) || '')
+                    handleTaskValueChange(index, 'endPage', parseInt(e.detail.value, 10) || '')
                   }
                   placeholder="--"
                 />
@@ -349,7 +362,8 @@ const Feedback = () => {
   return (
     <View className="feedback-page">
       {/* Header */}
-      <View className="header">
+      {/* Header */}
+      <View className="header" style={{ paddingTop: `${statusBarHeight + 10}px` }}>
         <View className="btn-back" onClick={() => Taro.navigateBack()}>
           <Text style={{ fontSize: '40rpx' }}>‹</Text>
         </View>
@@ -406,7 +420,7 @@ const Feedback = () => {
       <ScrollView className="main-content" scrollY>
         {/* 标题 */}
         <View className="section-header">
-          <Text className="section-title">Today's Tasks</Text>
+          <Text className="section-title">Today&apos;s Tasks</Text>
           <Text className="section-date">{getTodayStr()}</Text>
         </View>
 

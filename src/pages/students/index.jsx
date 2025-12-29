@@ -14,6 +14,7 @@ const Students = () => {
   const [formData, setFormData] = useState({
     name: '',
     nickname: '',
+    status: 'In Class',
     gender: 'Select',
     birthday: '',
     remainingHours: '',
@@ -74,6 +75,7 @@ const Students = () => {
     setFormData({
       name: '',
       nickname: '',
+      status: 'In Class',
       gender: 'Select',
       birthday: '',
       remainingHours: '',
@@ -112,7 +114,7 @@ const Students = () => {
         camera: 'back',
       });
 
-      const tempFilePath = res.tempFiles[0].tempFilePath;
+      const { tempFilePath } = res.tempFiles[0];
       setFormData((prev) => ({ ...prev, avatar: tempFilePath }));
     } catch (err) {
       console.log('Choose avatar cancelled or failed', err);
@@ -230,9 +232,6 @@ const Students = () => {
                     <Text className={`status-badge ${getStatusClass(student.status)}`}>
                       {student.status}
                     </Text>
-                    <Text className="id-text">
-                      ID: #{student.id.toString().slice(-4).padStart(4, '0')}
-                    </Text>
                   </View>
                 </View>
               </View>
@@ -315,6 +314,23 @@ const Students = () => {
                   value={formData.nickname}
                   onInput={(e) => handleInputChange('nickname', e.detail.value)}
                 />
+              </View>
+
+              <View className="form-group">
+                <Text className="label">Class Status</Text>
+                <View className="status-grid">
+                  {['In Class', 'Paused', 'Graduated'].map((status) => (
+                    <View
+                      key={status}
+                      className={`status-option ${status.toLowerCase().replace(' ', '-')} ${
+                        formData.status === status ? 'selected' : ''
+                      }`}
+                      onClick={() => handleInputChange('status', status)}
+                    >
+                      <Text>{status}</Text>
+                    </View>
+                  ))}
+                </View>
               </View>
 
               <View className="grid-2">

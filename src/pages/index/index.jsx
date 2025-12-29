@@ -2,11 +2,12 @@ import { Image, ScrollView, Text, View } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import { useState } from 'react';
 import TabBar from '../../components/TabBar';
+import { attendanceService } from '../../services/attendance';
 import { studentService } from '../../services/student';
 import './index.less';
 
 // Simple icons using characters or CSS
-const IconCheck = () => <View className="check-mark"></View>;
+const IconCheck = () => <View className="check-mark" />;
 
 const IconCalendar = () => <Text style={{ fontSize: '28rpx', marginRight: '8rpx' }}>📅</Text>;
 
@@ -42,16 +43,25 @@ const Index = () => {
   const [selectedIds, setSelectedIds] = useState([]);
 
   useDidShow(() => {
-    loadStudents();
+    loadData();
   });
 
-  const loadStudents = () => {
+  const loadData = () => {
     const allStudents = studentService.getStudents();
     // 只显示 In Class 状态的学生
     const inClassStudents = allStudents.filter((s) => s.status === 'In Class');
     setStudents(inClassStudents);
-    // 默认全选
-    setSelectedIds(inClassStudents.map((s) => s.id));
+
+    // 尝试获取今日已保存的考勤
+    const savedIds = attendanceService.getTodayAttendanceIds();
+    if (savedIds && savedIds.length > 0) {
+      // 过滤掉可能已不在 In Class 列表中的 ID
+      const validSavedIds = savedIds.filter((id) => inClassStudents.some((s) => s.id === id));
+      setSelectedIds(validSavedIds);
+    } else {
+      // 默认全选
+      setSelectedIds(inClassStudents.map((s) => s.id));
+    }
   };
 
   const toggleSelect = (id) => {
@@ -77,9 +87,12 @@ const Index = () => {
       return;
     }
 
-    // 跳转到反馈页面，传递选中的学生ID
+    // 保存考勤数据
+    attendanceService.saveAttendance(selectedIds);
+
+    // 跳转到反馈页面，不再传递参数，直接跳转
     Taro.navigateTo({
-      url: `/pages/feedback/index?studentIds=${selectedIds.join(',')}`,
+      url: '/pages/feedback/index',
     });
   };
 
