@@ -436,7 +436,9 @@
         background-color: @surface;
         border: 2rpx solid @border-light;
         border-radius: 16rpx;
-        padding: 28rpx 32rpx;
+        height: 96rpx; // 显式高度修复 iOS 渲染问题
+        padding: 0 32rpx; // 移除垂直 padding，靠 line-height 居中
+        line-height: 96rpx;
         font-size: 30rpx;
         color: @text-main;
         box-sizing: border-box;

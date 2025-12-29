@@ -178,6 +178,7 @@ const Students = () => {
               </Text>
             </View>
             <Input
+              always-embed
               className="search-input"
               placeholder="Search by name..."
               value={searchQuery}
@@ -296,6 +297,7 @@ const Students = () => {
               <View className="form-group">
                 <Text className="label">Full Name</Text>
                 <Input
+                  always-embed
                   className="input-box"
                   placeholder="e.g. Alice Johnson"
                   value={formData.name}
@@ -309,6 +311,7 @@ const Students = () => {
                   <Text className="sub-label">For feedback images</Text>
                 </View>
                 <Input
+                  always-embed
                   className="input-box"
                   placeholder="e.g. Alice"
                   value={formData.nickname}
@@ -376,6 +379,7 @@ const Students = () => {
                   <Text className="label">Remaining Hours</Text>
                   <View className="input-wrapper">
                     <Input
+                      always-embed
                       className="input-box"
                       type="number"
                       placeholder="0"
@@ -391,6 +395,7 @@ const Students = () => {
                   <View className="input-wrapper has-prefix">
                     <Text className="prefix">$</Text>
                     <Input
+                      always-embed
                       className="input-box"
                       type="digit"
                       placeholder="0.00"

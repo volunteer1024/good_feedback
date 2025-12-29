@@ -307,6 +307,7 @@ const Feedback = () => {
               <View className="page-input-wrapper">
                 <Text className="page-label">Start Pg</Text>
                 <Input
+                  always-embed
                   className="page-input"
                   type="number"
                   value={task.startPage?.toString() || ''}
@@ -320,6 +321,7 @@ const Feedback = () => {
               <View className="page-input-wrapper">
                 <Text className="page-label">End Pg</Text>
                 <Input
+                  always-embed
                   className="page-input"
                   type="number"
                   value={task.endPage?.toString() || ''}
@@ -480,6 +482,7 @@ const Feedback = () => {
               <View className="search-box">
                 <Text className="search-icon">🔍</Text>
                 <Input
+                  always-embed
                   className="search-input"
                   placeholder="搜索作业或输入拼音缩写"
                   value={searchQuery}

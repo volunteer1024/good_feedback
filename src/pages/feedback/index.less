@@ -359,7 +359,9 @@
 
             .page-input {
               width: 100%;
-              padding: 24rpx;
+              height: 80rpx; // 显式高度
+              padding: 0 24rpx; // 移除垂直 padding
+              line-height: 80rpx;
               background: #f9fafb;
               border: 2rpx solid @color-border;
               border-radius: 16rpx;
@@ -603,6 +605,7 @@
 
           .search-input {
             flex: 1;
+            height: 100%; // 确保占满父容器高度
             font-size: 28rpx;
           }
         }
