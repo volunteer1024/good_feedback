@@ -17,17 +17,17 @@ const TabBar = ({ activeTab = 'home' }) => {
   };
 
   return (
-    <View className="nav-bar">
+    <View className="tab-bar">
       {tabs.map((tab) => (
         <View
           key={tab.id}
-          className={`nav-item ${activeTab === tab.id ? 'active' : ''}`}
+          className={`tab-bar__item ${activeTab === tab.id ? 'is-active' : ''}`}
           onClick={() => handleTabClick(tab)}
         >
-          <Text className="nav-icon" style={{ fontSize: '40rpx' }}>
+          <Text className="tab-bar__icon" style={{ fontSize: '40rpx' }}>
             {tab.icon}
           </Text>
-          <Text className="nav-label">{tab.label}</Text>
+          <Text className="tab-bar__label">{tab.label}</Text>
         </View>
       ))}
     </View>
