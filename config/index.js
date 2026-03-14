@@ -5,6 +5,8 @@ import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig(async (merge, { command, mode }) => {
+  const publicPath = process.env.PUBLIC_PATH || '/'
+
   const baseConfig = {
     projectName: 'good_feedback',
     date: '2025-12-28',
@@ -46,7 +48,7 @@ export default defineConfig(async (merge, { command, mode }) => {
       }
     },
     h5: {
-      publicPath: '/',
+      publicPath,
       staticDirectory: 'static',
 
       miniCssExtractPluginOption: {
