@@ -64,3 +64,9 @@ _（记录其他踩坑，如 ScrollView 默认不支持 gap 属性等）_
   </View>
 </ScrollView>
 ```
+
+---
+
+## 3. 更多资源
+
+- **Taro 踩坑指南集合**: [https://github.com/manycore-maas/MP-Keng](https://github.com/manycore-maas/MP-Keng)

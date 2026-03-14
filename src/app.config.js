@@ -3,6 +3,7 @@ export default {
     'pages/index/index',
     'pages/attendance/index',
     'pages/feedback/index',
+    'pages/feedback/share/index',
     'pages/task/index',
     'pages/students/index',
     'pages/my/index',

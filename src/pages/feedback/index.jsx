@@ -91,6 +91,7 @@ const Feedback = () => {
   // 加载学生数据
   useDidShow(() => {
     loadStudents();
+    loadTasks();
   });
 
   const loadStudents = () => {
@@ -153,13 +154,33 @@ const Feedback = () => {
   });
 
   // 可选的作业库
-  const [taskBank] = useState([
+  // 可选的作业库
+  const [taskBank, setTaskBank] = useState([
     { id: 101, name: 'Little Prelude in C Minor', subtitle: 'J.S. Bach • BWV 999', icon: '🎵' },
     { id: 102, name: 'Sonatina in G Major', subtitle: 'Beethoven • Anh. 5', icon: '🎹' },
-    { id: 103, name: 'Sight Reading Level 2', subtitle: 'Exercise 15-20', icon: '📖' },
-    { id: 104, name: 'Moonlight Sonata', subtitle: 'Beethoven • 1st Movement', icon: '🎵' },
-    { id: 105, name: 'Scales & Arpeggios', subtitle: 'A Minor Harmonic', icon: '⚡' },
   ]);
+
+  const loadTasks = () => {
+    try {
+      const storedTasks = Taro.getStorageSync('task_bank_data');
+      if (storedTasks && Array.isArray(storedTasks)) {
+        const formattedTasks = storedTasks
+          .filter((t) => t.isActive !== false) // 过滤掉停用的任务
+          .map((t) => ({
+            id: t.id,
+            name: t.title,
+            subtitle: t.duration || t.pinyin || '',
+            icon: t.icon || '📝',
+            // 优先使用第一个跟踪类型，如果没有则默认 completed
+            defaultTrackingType:
+              t.trackingTypes && t.trackingTypes.length > 0 ? t.trackingTypes[0] : 'completed',
+          }));
+        setTaskBank(formattedTasks);
+      }
+    } catch (e) {
+      console.error('Failed to load tasks', e);
+    }
+  };
 
   const [selectedTasks, setSelectedTasks] = useState([]);
 
@@ -220,7 +241,7 @@ const Feedback = () => {
         id: Date.now() + taskId,
         taskId,
         name: task.name,
-        trackingType: 'completed',
+        trackingType: task.defaultTrackingType || 'completed',
         value: null,
       };
     });
@@ -236,6 +257,26 @@ const Feedback = () => {
   };
 
   const handleCompleteFeedback = () => {
+    // 准备传给分享页的数据
+    const currentStudent = students.find((s) => s.id === currentStudentId);
+    if (!currentStudent) return;
+
+    const feedbackData = {
+      student: currentStudent,
+      tasks: currentTasks,
+      // 简单处理头像，如果没有头像用莫兰迪色和首字母（在分享页处理了）
+      date: new Date().toLocaleDateString(),
+    };
+
+    // 跳转到分享页
+    Taro.navigateTo({
+      url: '/pages/feedback/share/index',
+      success(res) {
+        // 通过 EventChannel 传递数据
+        res.eventChannel.emit('acceptDataFromOpenerPage', feedbackData);
+      },
+    });
+
     // 标记当前学生反馈完成
     setStudents((prev) =>
       prev.map((s) => (s.id === currentStudentId ? { ...s, feedbackDone: true } : s)),
@@ -246,8 +287,6 @@ const Feedback = () => {
     if (nextStudent) {
       setCurrentStudentId(nextStudent.id);
     }
-
-    Taro.showToast({ title: '反馈已保存', icon: 'success' });
   };
 
   // 渲染作业项

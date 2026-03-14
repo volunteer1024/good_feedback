@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Feedback Image Generation</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#13ecec',
+              'primary-dim': '#0fbaba',
+              'background-light': '#FBFBF9',
+              'background-dark': '#102222',
+              'surface-light': '#FFFFFF',
+              'surface-dark': '#162e2e',
+              'text-main': '#37352F',
+              'text-muted': '#787774',
+              'border-subtle': '#E9E9E7',
+            },
+            fontFamily: {
+              display: ['Lexend', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '0.25rem',
+              lg: '0.5rem',
+              xl: '0.75rem',
+              '2xl': '1rem',
+              full: '9999px',
+            },
+            boxShadow: {
+              clean: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              float: '0 4px 12px rgba(0, 0, 0, 0.05)',
+              card: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .btn-press:active {
+        transform: scale(0.98);
+      }
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display antialiased text-text-main dark:text-white overflow-hidden h-screen flex flex-col selection:bg-primary/30"
+  >
+    <header
+      class="shrink-0 bg-background-light dark:bg-background-dark border-b border-border-subtle dark:border-slate-800 z-20"
+    >
+      <div class="flex items-center p-4 pb-2 justify-between">
+        <button
+          class="text-text-main dark:text-white flex size-10 shrink-0 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors"
+        >
+          <span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+        </button>
+        <h2
+          class="text-text-main dark:text-white text-lg font-semibold leading-tight tracking-tight flex-1 text-center pr-10"
+        >
+          Feedback Generated
+        </h2>
+      </div>
+    </header>
+    <main class="flex-1 overflow-y-auto no-scrollbar relative pb-48">
+      <div class="flex flex-col items-center pt-8 px-6">
+        <div class="w-full max-w-[340px] relative transition-all duration-300">
+          <div
+            class="bg-white dark:bg-[#1a1a1a] shadow-card rounded-none border-[8px] border-white dark:border-[#2a2a2a] overflow-hidden aspect-[4/5] flex flex-col relative group"
+          >
+            <div class="h-2 w-full bg-primary shrink-0"></div>
+            <div class="flex-1 p-6 flex flex-col bg-stone-50/50 dark:bg-white/5 relative">
+              <div
+                class="absolute top-4 right-4 bg-white dark:bg-white/10 px-2 py-1 rounded text-[10px] font-bold tracking-wider text-text-muted border border-black/5 dark:border-white/5 shadow-sm"
+              >
+                OCT 24
+              </div>
+              <div class="flex items-center gap-4 mb-6 mt-2">
+                <div class="relative">
+                  <div
+                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-16 shadow-inner"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBX0ecTPzeeIz3LoYNpwxqBi0C_KsBCPR17DtXPokcOWe4XDoI30DQRv7bXDSdHsNEr68p0oylzCJibOs62u13QhNPs9KFviTmuaNnF8KAuseEhatAIOmR7sgYdswjxIym9t38_7p0D84yew74jgG-eXZjZR0cYghgTBBHQht-aE9TNgsUlKYVueTq2wrAAE8Q1Lz0ZNi63xdd0YwXD719uAKtnbVkJfNEq7rQl4NJmyGFQlEpoqNP8m2jFUO9bb2jtfMz40K3L9g');
+                    "
+                  ></div>
+                  <div
+                    class="absolute -bottom-1 -right-1 bg-primary text-[#102222] rounded-full p-[2px] border-2 border-white dark:border-[#2a2a2a]"
+                  >
+                    <span class="material-symbols-outlined text-xs font-bold block">school</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="font-bold text-xl text-text-main dark:text-white">Alice</h3>
+                  <p class="text-xs font-medium text-text-muted uppercase tracking-wide">
+                    Piano Level 3
+                  </p>
+                </div>
+              </div>
+              <div class="h-px w-full bg-gray-200 dark:bg-white/10 mb-5"></div>
+              <div class="flex-1 space-y-5">
+                <div class="flex gap-3">
+                  <div class="mt-0.5 shrink-0 text-green-600 dark:text-green-400">
+                    <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-semibold text-text-main dark:text-white">
+                      Scale Practice - G Major
+                    </h4>
+                    <p class="text-xs text-text-muted mt-0.5 leading-relaxed">
+                      Focus on even tempo maintained throughout.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <div class="mt-0.5 shrink-0 text-amber-500 dark:text-amber-400">
+                    <span class="material-symbols-outlined text-[20px] fill-1">error</span>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-semibold text-text-main dark:text-white">
+                      Czerny Etude No. 5
+                    </h4>
+                    <p class="text-xs text-text-muted mt-0.5 leading-relaxed">
+                      Watch the fingering on pages 12-14. Needs more work.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <div class="mt-0.5 shrink-0 text-green-600 dark:text-green-400">
+                    <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-semibold text-text-main dark:text-white">
+                      Hanon Exercise No. 1
+                    </h4>
+                    <p class="text-xs text-text-muted mt-0.5 leading-relaxed">
+                      Completed successfully.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mt-auto pt-6 flex items-center justify-between border-t border-dashed border-gray-200 dark:border-white/10"
+              >
+                <div class="flex items-center gap-1.5 opacity-50">
+                  <span class="material-symbols-outlined text-base">piano</span>
+                  <span class="text-[10px] font-semibold tracking-wider">STUDIO MATE</span>
+                </div>
+                <span class="text-[10px] text-text-muted italic">Instructor: Sarah</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-full max-w-[340px] mt-8">
+          <h4 class="text-xs font-semibold text-text-muted mb-3 uppercase tracking-wider ml-1">
+            Card Background
+          </h4>
+          <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+            <button
+              class="group relative size-11 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center transition-transform active:scale-95"
+            >
+              <div
+                class="absolute inset-0 rounded-full ring-2 ring-primary ring-offset-2 dark:ring-offset-background-dark"
+              ></div>
+              <span class="material-symbols-outlined text-primary text-lg">check</span>
+            </button>
+            <button
+              class="size-11 rounded-full bg-[#FAF9F6] border border-stone-200 shadow-sm transition-transform active:scale-95 hover:scale-105"
+            ></button>
+            <button
+              class="size-11 rounded-full bg-gradient-to-br from-[#e0f2f1] to-[#b2dfdb] border border-teal-100 shadow-sm transition-transform active:scale-95 hover:scale-105"
+            ></button>
+            <button
+              class="size-11 rounded-full bg-gradient-to-br from-[#fff3e0] to-[#ffe0b2] border border-orange-100 shadow-sm transition-transform active:scale-95 hover:scale-105"
+            ></button>
+            <button
+              class="size-11 rounded-full bg-[#1a1a1a] border border-gray-700 shadow-sm transition-transform active:scale-95 hover:scale-105"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="absolute bottom-[84px] left-0 w-full z-30">
+      <div
+        class="h-8 w-full bg-gradient-to-b from-transparent to-background-light dark:to-background-dark"
+      ></div>
+      <div class="bg-background-light dark:bg-background-dark px-5 pb-6 pt-2">
+        <div class="flex gap-3">
+          <button
+            class="flex-1 btn-press bg-surface-light dark:bg-white/5 border border-border-subtle dark:border-white/10 text-text-main dark:text-white font-semibold py-3.5 rounded-xl shadow-clean active:bg-slate-50 transition-all flex items-center justify-center gap-2"
+          >
+            <span class="material-symbols-outlined text-[20px]">download</span>
+            Save Image
+          </button>
+          <button
+            class="flex-1 btn-press bg-primary dark:bg-primary-dim text-[#102222] font-bold py-3.5 rounded-xl shadow-float transition-all flex items-center justify-center gap-2"
+          >
+            <span class="material-symbols-outlined text-[20px]">ios_share</span>
+            Share
+          </button>
+        </div>
+      </div>
+    </div>
+    <nav
+      class="fixed bottom-0 left-0 w-full z-50 bg-background-light dark:bg-background-dark border-t border-border-subtle dark:border-white/10 pb-6 pt-2"
+    >
+      <div class="flex justify-around items-center px-1">
+        <button
+          class="flex flex-col items-center gap-1 p-2 text-text-muted dark:text-slate-500 hover:text-text-main dark:hover:text-white transition-colors flex-1 min-w-[60px]"
+        >
+          <span class="material-symbols-outlined text-[26px]">home</span>
+          <span class="text-[10px] font-medium">Home</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 p-2 text-primary flex-1 min-w-[60px]">
+          <span
+            class="material-symbols-outlined text-[26px]"
+            style="font-variation-settings: 'FILL' 1"
+            >rate_review</span
+          >
+          <span class="text-[10px] font-medium">Feedback</span>
+        </button>
+        <button
+          class="flex flex-col items-center gap-1 p-2 text-text-muted dark:text-slate-500 hover:text-text-main dark:hover:text-white transition-colors flex-1 min-w-[60px]"
+        >
+          <span class="material-symbols-outlined text-[26px]">task</span>
+          <span class="text-[10px] font-medium whitespace-nowrap tracking-tight"
+            >Task Management</span
+          >
+        </button>
+        <button
+          class="flex flex-col items-center gap-1 p-2 text-text-muted dark:text-slate-500 hover:text-text-main dark:hover:text-white transition-colors flex-1 min-w-[60px]"
+        >
+          <span class="material-symbols-outlined text-[26px]">school</span>
+          <span class="text-[10px] font-medium">Students</span>
+        </button>
+        <button
+          class="flex flex-col items-center gap-1 p-2 text-text-muted dark:text-slate-500 hover:text-text-main dark:hover:text-white transition-colors flex-1 min-w-[60px]"
+        >
+          <span class="material-symbols-outlined text-[26px]">person</span>
+          <span class="text-[10px] font-medium">My</span>
+        </button>
+      </div>
+    </nav>
+  </body>
+</html>
