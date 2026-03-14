@@ -80,38 +80,34 @@ pnpm run dev:h5
 pnpm run build:weapp
 ```
 
-## ☁️ Vercel 自动化部署（手机可访问）
+## ☁️ GitHub Pages 自动化部署（临时方案）
 
-项目已内置 GitHub Actions 工作流：`.github/workflows/deploy-vercel.yml`。
+项目已内置 GitHub Actions 工作流：`.github/workflows/deploy-pages.yml`。
 
 ### 启用步骤
 
-1. 在 [Vercel](https://vercel.com/) 导入你的 GitHub 仓库（首次会自动生成项目域名）。
-2. 在 GitHub 仓库 `Settings -> Secrets and variables -> Actions` 中新增以下 secrets：
-   - `VERCEL_TOKEN`
-   - `VERCEL_ORG_ID`
-   - `VERCEL_PROJECT_ID`
-3. 推送到 `main` 会发布 **production** 站点；推送到其他分支会发布 **preview** 站点。
-4. 因此不一定非要 `main` 才能看到线上效果，任意分支 push 也可以生成可访问的预览链接。
+1. 打开 GitHub 仓库 `Settings -> Pages`。
+2. 在 `Build and deployment` 中将 `Source` 设为 `GitHub Actions`。
+3. 推送到 `main` 分支后，Actions 会自动构建并发布 H5 站点。
 
 ### 部署后访问链接
 
-部署成功后，访问地址通常是：
+当前仓库 `volunteer1024/good_feedback` 的默认访问地址通常是：
 
 ```text
-https://<你的-vercel-项目名>.vercel.app
+https://volunteer1024.github.io/good_feedback/
 ```
 
 也可以在以下位置查看本次部署的精确链接：
 
-- GitHub Actions 日志中 `Deploy to Vercel (Production)` 或 `Deploy to Vercel (Preview)` 步骤输出的 URL
-- Vercel 项目 Dashboard 的 Deployments 列表（可看到 production 与 preview）
+- GitHub Actions 的 `Deploy H5 to GitHub Pages` 工作流
+- 仓库 `Settings -> Pages`
 
 ### 说明
 
-- 项目根目录新增 `vercel.json`，指定 `pnpm run build:h5` 作为构建命令，产物目录为 `dist`。
-- 已添加 SPA rewrite（所有路径回落到 `index.html`），避免 H5 刷新 404。
-- 工作流会自动判断分支：`main` 走 `--prod`，其他分支走 preview 部署。
+- 工作流会自动根据仓库名设置 H5 构建的 `PUBLIC_PATH`，适配 GitHub Pages 项目页路径。
+- 构建完成后会自动生成 `dist/404.html`，用于单页应用刷新时的兜底回退。
+- 产物目录仍然是 `dist`，构建命令仍然是 `pnpm run build:h5`。
 
 ## 📝 开发规范
 
